@@ -77,3 +77,11 @@ export const INVOICE_MODEL = {
     "ItemRate": "", // rate - qp fee + detentionPay + layoverPay || TONU charge || lumper
     "*ItemAmount": ""
 }
+
+
+export const DRIVER_MODEL = {
+    "name": "darryl",
+    "phone": "323",
+    "pay": 100,
+    "out": false
+}

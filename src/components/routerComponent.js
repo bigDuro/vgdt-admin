@@ -8,6 +8,7 @@ import {
 import Dashboard from '../containers/Dashboard';
 import LoadBoard from '../containers/LoadBoard';
 import BrokerBoard from '../containers/BrokerBoard';
+import DriverBoard from '../containers/DriverBoard';
 import Invoices from '../containers/Invoices';
 import LoadForm from '../containers/LoadForm';
 import BrokerForm from '../containers/BrokerForm';
@@ -23,6 +24,7 @@ export default function RouterComponent(props) {
           <Route exact path="/vgdt-admin/brokers" component={BrokerBoard} />
           <Route path="/vgdt-admin/brokers/:id" component={BrokerForm} />
           <Route exact path="/vgdt-admin/invoices" component={Invoices} />
+          <Route exact path="/vgdt-admin/drivers" component={DriverBoard} />
           <Route exact path="/vgdt-admin/" component={Dashboard} />
         </Switch>
     </Router>
