@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import ViewModuleIcon from '@material-ui/icons/ViewModule';
 import IconButton from '@material-ui/core/IconButton';
 import AppsIcon from '@material-ui/icons/Apps';
 import TocIcon from '@material-ui/icons/Toc';
@@ -13,8 +12,6 @@ import AdminContextProvider from '../../contexts/AdminContext';
 import { AdminContext } from '../../contexts/AdminContext';
 import { getColumnType } from './columns';
 import { paperStylesTable } from '../../styles/paper';
-import { getActions } from './actions';
-import { getUpdatedRows } from './rows';
 import './index.scss';
 
 
@@ -24,7 +21,6 @@ function CommonBoard(props) {
   const classes = paperStylesTable();
   const { history, match } = props;
   const [showGrid, setShowGrid] = useState(true);
-  const position = match.params.position || false;
   const table = match.params.table;
   const columnData = getColumnType(table);
   const showCard = useMediaQuery('(max-width:1023px)');
@@ -50,11 +46,12 @@ function CommonBoard(props) {
   }
 
   return (
-    <AdminContextProvider table={table}>
+    <AdminContextProvider table={table} history={history}>
       <AdminContext.Consumer>{(context) => {
-        const { tableData } = context;
-        const actions = getActions(context, table, history, tableData);
-        const rows = tableData[table] && tableData[table].length ? getUpdatedRows(context, table, tableData, actions) : [];
+        const { tableData, actions, rows } = context;
+        // const actions = getActions(context, table, history, tableData);
+        // const rows = tableData[table] && tableData[table].length ? tableData[table] : [];
+
         return (
           <Grid container spacing={3}>
             <div className="viewOptions">
@@ -63,7 +60,7 @@ function CommonBoard(props) {
                 </IconButton>
             </div>
             <Grid item xs={12}>
-                {showCard || !showCard && showGrid ? getCardView(rows, table, tableData, actions) : getListView(rows, actions)}
+                {showCard || (!showCard && showGrid) ? getCardView(rows, table, tableData, actions) : getListView(rows, actions)}
             </Grid>
           </Grid>
 

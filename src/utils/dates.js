@@ -13,7 +13,9 @@ export const getMomentWeeks = (data, key) => {
   const moment = getConfig()
   return data.reduce((acc, date) => {
     // create a composed key: 'year-week'
-    const yearWeek = `${moment(date[key]).year()}-${moment(date[key]).week()}`;
+    const weekVal = `${moment(date[key]).week()}`;
+    const wkUpdateVal = weekVal.length === 2 ? weekVal : `0${weekVal}`
+    const yearWeek = `${moment(date[key]).year()}-${wkUpdateVal}`;
 
     // add this key as a property to the result object
     if (!acc[yearWeek]) {

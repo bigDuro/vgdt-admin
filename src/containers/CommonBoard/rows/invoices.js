@@ -1,10 +1,9 @@
 import React from 'react';
-import { Button } from '@material-ui/core';
 import Link from '@material-ui/core/Link';
 const viewLoadButton = (loadId, actions) => (<Link color="primary" href="#" onClick={(e) => actions.handleLoadClick(e, loadId)}>Load Details</Link>);
 const viewBrokerButton = (brokerid, name, actions) => (<Link color="primary" href="#" onClick={(e) => actions.handleBrokerClick(e, brokerid)}>{name}</Link>);
 
-export const getInvoiceRowData = (context, rows, actions, tables) => {
+export const getInvoiceRowData = (rows, actions, tables) => {
   const formatProductServices = (records) => {
     const services = records.map(record => {
       return record.ProductService

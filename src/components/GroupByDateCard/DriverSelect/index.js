@@ -4,7 +4,6 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -20,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
 export default function DriverSelect(props) {
   const classes = useStyles();
   const { actions, employees } = props;
-  const { filterByDriver, getDriver, getDrivers } = actions;
+  const { filterByDriver, getDriver } = actions;
   const driver = getDriver();
   const drivers = employees && employees.length && employees.filter(person => person.position === 'driver');
   const handleChange = (event) => {

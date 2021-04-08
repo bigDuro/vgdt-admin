@@ -4,18 +4,15 @@ import clsx from 'clsx';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
-import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Collapse from '@material-ui/core/Collapse';
 import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
 import { red, green } from '@material-ui/core/colors';
 import WatchLaterIcon from '@material-ui/icons/WatchLater';
 import MailOutlineIcon from '@material-ui/icons/MailOutline';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Checkbox from '@material-ui/core/Checkbox';
 
 const useStyles = makeStyles((theme) => ({
@@ -57,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function EmployeeCard(props) {
-  const { data, actions, isMobile, selected, setSelected } = props;
+  const { data, selected, setSelected } = props;
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
 
@@ -77,13 +74,11 @@ export default function EmployeeCard(props) {
               </Avatar>
             }
             action={
-              <IconButton aria-label="settings">
               <Checkbox
                 checked={selected.includes(data.id)}
                 onClick={(event) => setSelected(event, data.id)}
                 inputProps={{ 'aria-label': 'primary checkbox' }}
               />
-              </IconButton>
             }
             title={`${data.firstname} ${data.lastname}`}
             subheader={`Position: ${data.position}`}
@@ -96,7 +91,7 @@ export default function EmployeeCard(props) {
               <MailOutlineIcon/>
             </Avatar>
           }
-          title={`Phone: ${data. phone_number}`}
+          title={`Phone: ${data.phone_number}`}
           subheader={`Email: ${data.email}`}
         />
         </Grid>

@@ -1,12 +1,15 @@
-import React, { Component, createContext, useState, useEffect } from 'react';
+import React, { Component, createContext } from 'react';
 import { get, getType, getByID, save, deleteById, exportToCSV, uploadAssets } from '../services/';
+import { getActions } from '../containers/CommonBoard/actions';
+import { getUpdatedRows } from '../containers/CommonBoard/rows';
 
 export const AdminContext = createContext();
 
 class AdminContextProvider extends Component {
   constructor(props) {
     super()
-    const { table } = props;
+    const { table, history } = props;
+    const actions = getActions(table, history, {});
     this.state = {
       filteredRecords: [],
       searchTerm: '',
@@ -16,8 +19,14 @@ class AdminContextProvider extends Component {
       exportToCSV: [],
       tableData: {},
       table: table,
-      driver: ''
+      driver: '',
+      formatedData: [],
+      history: history,
+      actions,
+      rows: [],
+      requiredData: [ table, ...this.getRequiredData(table) ]
     }
+    this.setFormatedData = this.setFormatedData.bind(this);
     this.getAllRecords = this.getAllRecords.bind(this);
     this.getAllRecordsByType = this.getAllRecordsByType.bind(this);
     this.saveRecord = this.saveRecord.bind(this);
@@ -44,26 +53,46 @@ class AdminContextProvider extends Component {
   }
 
   shouldComponentUpdate(nextProps, nextState){
-    if(nextProps.table !== this.props.table){
+    if(nextProps.table !== this.props.table) {
       this.setState({
-        table: nextProps.table
+        table: nextProps.table,
+        requiredData: [ nextProps.table, ...this.getRequiredData(nextProps.table) ]
       }, () => {
-        this.getData(this.state.table);
+        console.log('getData getData');
+        this.getData(nextProps.table)
       })
-
     }
 
-    return nextProps.table === this.props.table
+    return nextState.rows !== this.state.rows
+  }
+
+  setFormatedData(data) {
+    this.setState({
+      formatedData: data
+    })
   }
 
   getData(table) {
-    const requiredData = this.getRequiredData(table);
-    const dataTables = [ table, ...requiredData ];
-
+    const dataTables = [ table, ...this.getRequiredData(table) ];
     if(dataTables)
-    dataTables.map(async (tbl) => {
-      this.getAllRecords(tbl);
-    })
+    Promise.all(dataTables.map(async (tbl) => {
+      return this.getAllRecords(tbl);
+    })).then(d => {
+      const data = d.reduce((model, m) => {
+        model = {
+          ...model,
+          ...m
+        }
+        return model
+      }, {})
+      const actions = getActions(this.state.table, this.state.history, data);
+      this.setState({
+        tableData: data,
+        actions,
+        rows: [...getUpdatedRows(this.state.table, data, this.state.actions)]
+      })
+    }).catch(e => console.log('error:: ', e))
+
   }
 
   getRequiredData(table) {
@@ -75,17 +104,14 @@ class AdminContextProvider extends Component {
     return tables[table] || []
   }
 
-  async getAllRecords(table) {
-    const response = await get(table);
-    this.setState({
-      tableData: {
-        ...this.state.tableData,
-        [table]: [...response]
-      }
-    }, () => {
-      console.log('getAllRecords:: ', this.state.tableData);
+  getAllRecords(table) {
+    const getAllRecordsPromise = new Promise((resolve, reject) => {
+      get(table).then(data => {
+        resolve({[table]: data})
+      });
     })
-    return response;
+
+    return getAllRecordsPromise;
   }
 
   async getAllRecordsByType(table, type) {
@@ -123,11 +149,11 @@ class AdminContextProvider extends Component {
   }
 
   getValueByID(record, field) {
-    const fieldsWithRefs = ['employees'];
+    const fieldsWithRefs = ['driver'];
     let driverProfile = '';
     if(fieldsWithRefs.includes(field) && record[field]) {
       if(!this.results[record[field]]) {
-          driverProfile = this.state.tableData[field].filter(rec => rec.id === record[field])[0];
+          driverProfile = this.state.tableData['employees'].filter(rec => rec.id === record[field])[0];
           this.results = {
               ...this.results,
               [record[field]]: `${driverProfile.firstname} ${driverProfile.lastname}`
@@ -243,7 +269,8 @@ class AdminContextProvider extends Component {
           setRecords: this.setRecords,
           exportRecordToCSV: this.exportRecordToCSV,
           setTableData: this.setTableData,
-          uploadAssets: this.uploadAssets
+          uploadAssets: this.uploadAssets,
+          setFormatedData: this.setFormatedData
         }
       }>
         {this.props.children}

@@ -1,11 +1,10 @@
 import React from 'react';
-import { Button } from '@material-ui/core';
 import Link from '@material-ui/core/Link';
 import ControlPanel from '../../../components/CardView/LoadCard/ControlPanel/';
 const editBrokerButton = (loadId, brokerId, actions, name) => (<Link href="#" onClick={(e) => actions.handleBrokerClick(e, loadId, brokerId)}>{name}</Link>);
 const addBrokerButton = (loadId, brokerId, actions, name) => (<Link href="#" style={{color:"#ff0303"}} onClick={(e) => actions.handleBrokerClick(e, loadId, brokerId)}>Add Broker!</Link>)
 
-export const getLoadRowData = (context, rows, actions, editButton, tables) => {
+export const getLoadRowData = (rows, actions, editButton, tables) => {
 
   return rows.map(row => {
     const newRow = {...row};

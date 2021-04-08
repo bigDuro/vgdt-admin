@@ -1,20 +1,12 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
 import Avatar from '@material-ui/core/Avatar';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    margin: '10px auto'
-  }
-}));
 
 export default function DriverWeek(props) {
   const { totals, icons, driver } = props;
-  const classes = useStyles();
 
   return (
     <React.Fragment>

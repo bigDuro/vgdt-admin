@@ -5,14 +5,12 @@ import ListToolBar from '../ListToolBar';
 import EnhancedTableToolbar from '../ListActionBar';
 import WeeklyCard from '../CardView/WeeklyCard';
 import DriverSelect from './DriverSelect';
-import { getWeek } from '../../utils/getWeeks';
 import { getMomentWeeks } from '../../utils/dates';
 
 export default function GroupByDateCard(props) {
-  const { rows, table, tables, actions } = props;
+  const { rows, tables, actions } = props;
   const isMobile = useMediaQuery('(max-width:1023px)');
   const [ selected, setSelected ] = React.useState([]);
-  const [ week, setWeek ] = React.useState({});
   const handleSelected = (event, name) => {
     const selectedIndex = selected.indexOf(name);
     let newSelected = [];

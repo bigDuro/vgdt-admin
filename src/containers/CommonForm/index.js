@@ -35,7 +35,7 @@ function CommonForm(props) {
   return (
     <AdminContextProvider>
       <AdminContext.Consumer>{(context) => {
-        const { record, getRecord, getAllRecords, setRecord } = context;
+        const { record, getRecord, getAllRecords } = context;
         const formData = record['id'] ? record : getFormData(schemaTyle).formData;
         const actions = getActions(context, table, history);
 

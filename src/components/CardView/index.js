@@ -1,5 +1,4 @@
 import React from 'react';
-import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import LoadCard from './LoadCard';
@@ -10,11 +9,9 @@ import EmployeeCard from './EmployeeCard';
 import EquipmentCard from './EquipmentCard';
 import ListToolBar from '../ListToolBar';
 import EnhancedTableToolbar from '../ListActionBar';
-import { paperStylesTable } from '../../styles/paper';
 
 const CardView = (props) => {
   const { rows, actions, table } = props;
-  const classes = paperStylesTable();
   const isMobile = useMediaQuery('(max-width:1023px)');
   const [ selected, setSelected ] = React.useState([]);
   const cardTypes = (type, row, indx, handleSelected) => {

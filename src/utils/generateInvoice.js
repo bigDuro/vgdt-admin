@@ -8,25 +8,25 @@ const getItemAmount = (load, broker, service) => {
   switch (service) {
     case 'TONU':
       return parseInt(tonuFee)
-      break;
+      // break;
     case 'QUICKPAY':
       const fee = tonu && tonu !== '0' ? tonuFee : parseInt(rate) + parseInt(detentionPay);
       const quickPayFee = fee * quickPayPercentage;
       return -quickPayFee
-      console.log(quickPayFee, rate, detentionPay);
-      break;
+      // console.log(quickPayFee, rate, detentionPay);
+      // break;
     case 'DETENTION':
       const detentionPayFee = detentionPay * detentionRate;
       return detentionPayFee
-      break;
+      // break;
     case 'LAYOVER':
     console.log('Layover: ', layoverPay, layoverRate );
       const layoverPayFee = layoverPay * layoverRate;
       return layoverPayFee
-      break;
+      // break;
     case 'LUMPER CHARGE':
       return lumper;
-      break;
+      // break;
     default: return rate
   }
 }
@@ -34,7 +34,7 @@ const getItemAmount = (load, broker, service) => {
 const getItem = (load, broker, service) => {
   const { id, loadNumber, dropoffDate, pickupLocation, dropoffLocation} = load;
   const { name, address, billingEmail, paymentTerms} = broker;
-  const { today, tomorrow } = getTodayAndTommorrowDates();
+  const { today } = getTodayAndTommorrowDates();
   const dueDate = paymentTerms ? addDaysToToday(parseInt(paymentTerms)) : 30;
   const itemAmount = getItemAmount(load, broker, service);
   const description = service === 'Transportation' || service === 'TONU' ? `${pickupLocation} - ${dropoffLocation}` : service;

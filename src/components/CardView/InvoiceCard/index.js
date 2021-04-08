@@ -4,17 +4,15 @@ import clsx from 'clsx';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
-import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Collapse from '@material-ui/core/Collapse';
 import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import { red, green, grey, lightBlue } from '@material-ui/core/colors';
+import { red, green, grey } from '@material-ui/core/colors';
 import LocalShippingIcon from '@material-ui/icons/LocalShipping';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Checkbox from '@material-ui/core/Checkbox';
 import DoneIcon from '@material-ui/icons/Done';
 import './index.scss';
@@ -62,7 +60,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function InvoiceCard(props) {
-  const { data, actions, isMobile, selected, setSelected } = props;
+  const { data, selected, setSelected } = props;
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
   const isBilled = data.billed === "Yes";
@@ -81,13 +79,13 @@ export default function InvoiceCard(props) {
             </Avatar>
           }
           action={
-            <IconButton aria-label="settings">
+            <div>
             {!isBilled ? <Checkbox
               checked={selected.includes(data.id)}
               onClick={(event) => setSelected(event, data.id)}
               inputProps={{ 'aria-label': 'primary checkbox' }}
             /> : <DoneIcon className={classes.billed}/>}
-            </IconButton>
+            </div>
           }
           title={`Customer`}
           subheader={data.broker}
