@@ -63,7 +63,7 @@ class AdminContextProvider extends Component {
       })
     }
 
-    return nextState.rows !== this.state.rows
+    return nextState.rows !== this.state.rows || this.state.searchTerm !== nextState.searchTerm
   }
 
   setFormatedData(data) {
@@ -148,27 +148,13 @@ class AdminContextProvider extends Component {
     })
   }
 
-  getValueByID(record, field) {
-    const fieldsWithRefs = ['driver'];
-    let driverProfile = '';
-    if(fieldsWithRefs.includes(field) && record[field]) {
-      if(!this.results[record[field]]) {
-          driverProfile = this.state.tableData['employees'].filter(rec => rec.id === record[field])[0];
-          this.results = {
-              ...this.results,
-              [record[field]]: `${driverProfile.firstname} ${driverProfile.lastname}`
-            }
-        }
-      }
-      return this.results[record[field]] ? this.results[record[field]] : '';
-    }
+
 
 
   filterRecords(table, fields, searchTerm) {
     if(fields.length) {
       const results = fields.map(field => {
-        return this.state.tableData[table].filter(record => record[field] && (record[field].toLowerCase().includes(searchTerm.toLowerCase()) ||
-          this.getValueByID(record, field).toLowerCase().includes(searchTerm.toLowerCase())));
+        return this.state.tableData[table].filter(record => record[field] && (record[field].toLowerCase().includes(searchTerm.toLowerCase())));
       })
 
       const filteredRecords = [];
@@ -186,7 +172,7 @@ class AdminContextProvider extends Component {
         return result
       })
       this.setState({
-        filteredRecords: filteredRecords,
+        rows: filteredRecords,
         searchTerm
       })
     }

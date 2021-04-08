@@ -98,9 +98,7 @@ export default function EquipmentCard(props) {
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <CardActions disableSpacing className={classes.cardActions}>
-            <IconButton aria-label="details">
-              {data.edit}
-            </IconButton>
+            {data.edit}
             <IconButton
               className={clsx(classes.expand, {
                 [classes.expandOpen]: expanded,
