@@ -1,7 +1,7 @@
-export const getDispatchRowData = (rows, actions, editButton) => {
+export const getDispatchRowData = (rows) => {
   return rows.map(row => {
     const newRow = {...row};
-    newRow.edit = editButton(row.id, actions);
+    // newRow.edit = editButton(row.id, actions);
     newRow.name = `${row.firstname} ${row.lastname}`;
     return newRow;
   })

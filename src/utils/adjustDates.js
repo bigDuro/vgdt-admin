@@ -20,7 +20,6 @@ export const getTodayAndTommorrowDates = () => {
 }
 
 
-
 export const addDaysToToday = (num) => {
   Date.prototype.addDays = function (days) {
     let date = new Date(this.valueOf());

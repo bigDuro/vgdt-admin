@@ -31,8 +31,6 @@ export default function GroupByDateCard(props) {
   };
 
 
-
-
   const getWeeklyTotals = (data, key) => {
     const results = data[key].reduce((total, record) => {
       const weeksRateToDate = total.rate ? parseInt(record.rate) + parseInt(total.rate) : parseInt(record.rate);

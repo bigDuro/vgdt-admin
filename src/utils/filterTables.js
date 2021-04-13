@@ -19,12 +19,14 @@ export const filterTables = (table, position) => tables().filter(item => {
 
 
 
-export const filterRecords = (records, fields, searchTerm) => {
+export const filterRecords = (records, searchTerm) => {
+  const fields = Object.keys(records[0]);
+
   const filteredRecords = [];
   const cacheIDs = [];
   if(fields.length) {
     const results = fields.map(field => {
-      return records.filter(record => record[field] && (record[field].toLowerCase().includes(searchTerm.toLowerCase())));
+      return records.filter(record => record[field] && record[field].length && (record[field].toLowerCase().includes(searchTerm.toLowerCase())));
     })
     results.map(result => {
       result.map(rec => {
@@ -38,6 +40,5 @@ export const filterRecords = (records, fields, searchTerm) => {
       return result
     })
   }
-  console.log('filteredRecords:: ', filteredRecords);
   return filteredRecords
 }

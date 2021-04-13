@@ -1,5 +1,3 @@
-import React from 'react';
-import { Button } from '@material-ui/core';
 import { getRowData } from './common';
 import { getBrokerRowData } from './brokers';
 import { getLoadRowData } from './loads';
@@ -9,20 +7,19 @@ import { getInvoiceRowData } from './invoices';
 import { getEquipmentRowData } from './equipment';
 
 
-export const getUpdatedRows = (table, tables, actions) => {
+export const getUpdatedRows = (table, tables) => {
   const rows = tables[table];
-  const editButton = (id, actions) => (<Button color="primary" size="small" variant="contained" onClick={() => actions.handleClick(id)}>Details</Button>);
-  const common = rows && rows.length ? getRowData(rows, actions, editButton) : [];
+  const common = rows && rows.length ? getRowData(rows) : [];
   const types = {
-    brokers: () => getBrokerRowData(rows, actions, editButton, tables),
-    loads: () => getLoadRowData(rows, actions, editButton, tables),
-    driver: () => getDriverRowData(rows, actions, editButton, tables),
-    dispatch: () => getDispatchRowData(rows, actions, editButton, tables),
-    invoices: () => getInvoiceRowData(rows, actions, tables),
-    tractor: () => getEquipmentRowData(rows, actions, editButton, tables),
-    trailer: () => getEquipmentRowData(rows, actions, editButton, tables),
-    equipment: () => getEquipmentRowData(rows, actions, editButton, tables),
-    employees: () => getDriverRowData(rows, actions, editButton, tables)
+    brokers: () => getBrokerRowData(rows, tables),
+    loads: () => getLoadRowData(rows, tables),
+    driver: () => getDriverRowData(rows, tables),
+    dispatch: () => getDispatchRowData(rows, tables),
+    invoices: () => getInvoiceRowData(rows, tables),
+    tractor: () => getEquipmentRowData(rows, tables),
+    trailer: () => getEquipmentRowData(rows, tables),
+    equipment: () => getEquipmentRowData(rows, tables),
+    employees: () => getDriverRowData(rows, tables)
   }
   return types[table] ? types[table]() : common;
 }

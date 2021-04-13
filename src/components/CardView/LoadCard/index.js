@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from '@material-ui/core/Link';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import Grid from '@material-ui/core/Grid';
@@ -19,6 +20,7 @@ import ErrorIcon from '@material-ui/icons/Error';
 import RoomIcon from '@material-ui/icons/Room';
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
 import PauseCircleFilledIcon from '@material-ui/icons/PauseCircleFilled';
+import ControlPanel from './ControlPanel/';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -121,7 +123,7 @@ const icons = (type, classes) => {
 }
 
 export default function LoadCard(props) {
-  const { data } = props;
+  const { data, actions } = props;
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
 
@@ -131,7 +133,6 @@ export default function LoadCard(props) {
   const totalMiles = parseInt(data.loadedMiles) + parseInt(data.deadHead);
   const ratePerMile = `$${Math.round(parseInt(data.rate)/totalMiles * 100) / 100}`;
   // const isBilled = data.status === "Billed";
-
   return (
     <Card className={classes.root}>
       <Grid container spacing={0} alignItems="center" justify="space-between">
@@ -180,14 +181,14 @@ export default function LoadCard(props) {
             </Avatar>
           }
           title={`Rate: $${data.rate}.00`}
-          subheader={data.editBroker}
+          subheader={!data.brokerName ? <Link href="#" style={{color:"#ff0303"}} onClick={(e) => actions.handleBrokerClick(e, data.id, data.broker)}>Add Broker!</Link> : <Link href="#" onClick={(e) => actions.handleBrokerClick(e, data.id, data.broker)}>{data.brokerName}</Link>}
         />
         </Grid>
       </Grid>
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <CardActions disableSpacing className={classes.cardActions}>
-            {data.controlPanel}
+            {<ControlPanel row={data} actions={actions}/>}
             <IconButton
               className={clsx(classes.expand, {
                 [classes.expandOpen]: expanded,

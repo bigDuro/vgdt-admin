@@ -25,7 +25,8 @@ const getInvoiceItemsWithIds = (ids, records) => {
 }
 
 
-export const getInvoiceActions = (table, history, tableData) => {
+export const getInvoiceActions = (table, history, context) => {
+  const { tableData } = context;
   // const refreshData = (store) => {
   //   getAllRecords(store).then(data => {
   //     setTableData(store, data);

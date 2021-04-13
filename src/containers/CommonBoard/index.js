@@ -12,6 +12,7 @@ import AdminContextProvider from '../../contexts/AdminContext';
 import { AdminContext } from '../../contexts/AdminContext';
 import { getColumnType } from './columns';
 import { paperStylesTable } from '../../styles/paper';
+import { getActions } from './actions';
 import './index.scss';
 
 
@@ -48,9 +49,9 @@ function CommonBoard(props) {
   return (
     <AdminContextProvider table={table} history={history}>
       <AdminContext.Consumer>{(context) => {
-        const { tableData, actions, rows } = context;
-        // const actions = getActions(context, table, history, tableData);
-        // const rows = tableData[table] && tableData[table].length ? tableData[table] : [];
+        const { tableData, rows, filteredRecords, searchTerm } = context;
+        const actions = getActions(table, history, context);
+        const data = searchTerm.length ?  filteredRecords : rows
 
         return (
           <Grid container spacing={3}>
@@ -60,7 +61,7 @@ function CommonBoard(props) {
                 </IconButton>
             </div>
             <Grid item xs={12}>
-                {showCard || (!showCard && showGrid) ? getCardView(rows, table, tableData, actions) : getListView(rows, actions)}
+                {showCard || (!showCard && showGrid) ? getCardView(data, table, tableData, actions) : getListView(data, actions)}
             </Grid>
           </Grid>
 

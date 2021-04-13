@@ -30,7 +30,6 @@ const styles = (theme) => ({
 function ListToolBar(props) {
   const { classes, actions } = props;
   const { handleAdd, handleChange } = actions;
-
   return (
     <AppBar className={classes.searchBar} position="static" color="default" elevation={0}>
       <Toolbar>

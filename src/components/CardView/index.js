@@ -11,7 +11,7 @@ import ListToolBar from '../ListToolBar';
 import EnhancedTableToolbar from '../ListActionBar';
 
 const CardView = (props) => {
-  const { rows, actions, table } = props;
+  const { rows, table, actions } = props;
   const isMobile = useMediaQuery('(max-width:1023px)');
   const [ selected, setSelected ] = React.useState([]);
   const cardTypes = (type, row, indx, handleSelected) => {
