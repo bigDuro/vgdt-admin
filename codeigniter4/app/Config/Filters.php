@@ -1,5 +1,7 @@
 <?php namespace Config;
 
+//kyle new
+
 use CodeIgniter\Config\BaseConfig;
 
 class Filters extends BaseConfig
