@@ -4,11 +4,12 @@ import { DispatchJSONSchema, DispatchUISchema, DispatchFormData } from './dispat
 import { EquipmentJSONSchema, EquipmentUISchema, EquipmentFormData } from './equipment';
 import { DriverJSONSchema, DriverUISchema, DriverFormData } from './driver';
 import { UsersJSONSchema, UsersUISchema, UsersFormData } from './users';
+import { addValues } from '../../../utils/addItemsToSchema';
 
 
-export const getSchemaType = (type) => {
+export const getSchemaType = (type, tables) => {
   const types = {
-    loads: { JSONSchema: LoadJSONSchema, UISchema: LoadUISchema},
+    loads: { JSONSchema: addValues(LoadJSONSchema, tables, 'loads'), UISchema: LoadUISchema},
     brokers: { JSONSchema: BrokerJSONSchema, UISchema: BrokerUISchema},
     dispatch: { JSONSchema: DispatchJSONSchema, UISchema: DispatchUISchema},
     equipment: { JSONSchema: EquipmentJSONSchema, UISchema: EquipmentUISchema},

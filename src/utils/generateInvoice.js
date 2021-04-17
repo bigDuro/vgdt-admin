@@ -31,7 +31,7 @@ const getItemAmount = (load, broker, service) => {
   }
 }
 
-const getItem = (load, broker, service) => {
+const getItem = (load, broker, service, truckNumber) => {
   const { id, loadNumber, dropoffDate, pickupLocation, dropoffLocation} = load;
   const { name, address, billingEmail, paymentTerms} = broker;
   const { today } = getTodayAndTommorrowDates();
@@ -40,7 +40,7 @@ const getItem = (load, broker, service) => {
   const description = service === 'Transportation' || service === 'TONU' ? `${pickupLocation} - ${dropoffLocation}` : service;
   const item = {
     ...INVOICE_MODEL,
-    "*InvoiceNo": `${id}-${loadNumber}`, // 2018 +
+    "*InvoiceNo": `${id}-${loadNumber}-${truckNumber}`, // 2018 +
     "*Customer": name, // Broker Name
     "BillingAddress": address, // Broker
     "CustomerEmail": billingEmail, // Broker
@@ -61,15 +61,16 @@ const getItem = (load, broker, service) => {
 }
 
 
-export const generateInvoiceItems = (load, broker) => {
+export const generateInvoiceItems = (load, broker, equipment) => {
   const { tonu, detentionPay, layoverPay, lumper } = load;
   const { quickPay } = broker;
+  const truckNumber = equipment.filter(item => item.id === load.tractor)[0].unit_num;
   const service = tonu !== "0" && tonu > 0 ? 'TONU' : 'Transportation';
-  const invoiceItem = getItem(load, broker, service);
-  const quickPayItem = quickPay !== "0" && quickPay > 0 ? getItem(load, broker, 'QUICKPAY') : false;
-  const detentionPayItem = detentionPay !== "0" && detentionPay > 0 ? getItem(load, broker, 'DETENTION') : false;
-  const layoverPayItem = layoverPay !== "0" && layoverPay > 0 ? getItem(load, broker, 'LAYOVER') : false;
-  const lumperItem = lumper !== "0" && lumper > 0 ? getItem(load, broker, 'LUMPER CHARGE') : false;
+  const invoiceItem = getItem(load, broker, service, truckNumber);
+  const quickPayItem = quickPay !== "0" && quickPay > 0 ? getItem(load, broker, 'QUICKPAY', truckNumber) : false;
+  const detentionPayItem = detentionPay !== "0" && detentionPay > 0 ? getItem(load, broker, 'DETENTION', truckNumber) : false;
+  const layoverPayItem = layoverPay !== "0" && layoverPay > 0 ? getItem(load, broker, 'LAYOVER', truckNumber) : false;
+  const lumperItem = lumper !== "0" && lumper > 0 ? getItem(load, broker, 'LUMPER CHARGE', truckNumber) : false;
   const invoiceItems = [invoiceItem, detentionPayItem, layoverPayItem, lumperItem, quickPayItem];
   return invoiceItems;
 }

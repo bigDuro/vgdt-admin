@@ -1,4 +1,5 @@
 export const formatData = (table, formData) => {
+  // console.log('table, formData:: ', table, formData);
   const formattedFields = {
     brokers: {
       fields_boolean: ['quickPay'],

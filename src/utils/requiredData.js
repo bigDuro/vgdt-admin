@@ -7,22 +7,22 @@ export const requiredData = {
     },
     {
       type: 'user',
-      table: 'dispatch',
+      table: 'employees',
       field: 'lastname'
     },
     {
       type: 'driver',
-      table: 'driver',
+      table: 'employees',
       field: 'lastname'
     },
     {
       type: 'tractor',
-      table: 'tractor',
+      table: 'equipment',
       field: 'unit_num'
     },
     {
       type: 'trailer',
-      table: 'trailer',
+      table: 'equipment',
       field: 'unit_num'
     }
   ]

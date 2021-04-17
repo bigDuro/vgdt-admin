@@ -8,7 +8,7 @@ import DriverSelect from './DriverSelect';
 import { getMomentWeeks } from '../../utils/dates';
 
 export default function GroupByDateCard(props) {
-  const { rows, tables, actions } = props;
+  const { rows, tables, actions, searchTerm } = props;
   const isMobile = useMediaQuery('(max-width:1023px)');
   const [ selected, setSelected ] = React.useState([]);
   const handleSelected = (event, name) => {
@@ -75,7 +75,7 @@ export default function GroupByDateCard(props) {
     <React.Fragment>
       <Grid container spacing={1}>
         <Grid item xs={12}>
-            <ListToolBar actions={actions}/>
+            <ListToolBar actions={actions} searchTerm={searchTerm}/>
             <EnhancedTableToolbar numSelected={selected.length} {...actions} selected={selected} setSelected={setSelected}/>
         </Grid>
         <Grid item xs={12}><DriverSelect employees={tables.employees} actions={actions}/></Grid>

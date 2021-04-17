@@ -99,12 +99,12 @@ export const LoadJSONSchema = {
     "loadedMiles": {
       "title": "Loaded Miles",
       "type": "number",
-      "default": 500
+      "default": 0
     },
     "rate": {
       "title": "Rate",
       "type": "number",
-      "default": 1500
+      "default": 0
     },
     "weight": {
       "title": "Weight",
@@ -119,23 +119,23 @@ export const LoadJSONSchema = {
     "driver": {
       "title": "Driver",
       "type": "string",
-      "enum": [],
-      "enumNames": [],
-      "default": ""
+      "enum": ["none"],
+      "enumNames": ["None"],
+      "default": "none"
     },
     "tractor": {
       "title": "Tractor",
       "type": "string",
-      "enum": [],
-      "enumNames": [],
-      "default": ""
+      "enum": ["none"],
+      "enumNames": ["None"],
+      "default": "none"
     },
     "trailer": {
       "title": "Trailer",
       "type": "string",
-      "enum": [],
-      "enumNames": [],
-      "default": ""
+      "enum": ["none"],
+      "enumNames": ["None"],
+      "default": "none"
     },
     "detentionPay": {
       "title": "Detention hrs",
@@ -179,7 +179,7 @@ export const LoadJSONSchema = {
         "type": "string",
         "format": "data-url"
       }
-    },
+    }
   }
 }
 
@@ -199,13 +199,13 @@ export const LoadFormData = {
   "cargo": "",
   "driver": "1",
   "tractor": "1",
-  "trailer": "2",
+  "trailer": "none",
   "detentionPay": 0,
   "layoverPay": 0,
   "lumper": 0,
   "loadNumber": "",
   "notes": "",
-  "tonu": "false",
+  "tonu": "0",
   "ratecon": ""
 };
 

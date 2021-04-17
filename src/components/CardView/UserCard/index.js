@@ -9,6 +9,7 @@ import CardActions from '@material-ui/core/CardActions';
 import Collapse from '@material-ui/core/Collapse';
 import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
+import { Button } from '@material-ui/core';
 import { red, green } from '@material-ui/core/colors';
 import MailOutlineIcon from '@material-ui/icons/MailOutline';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
@@ -53,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function UserCard(props) {
-  const { data, selected, setSelected } = props;
+  const { data, selected, setSelected, actions } = props;
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
 
@@ -109,7 +110,7 @@ export default function UserCard(props) {
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <CardActions disableSpacing className={classes.cardActions}>
-            {data.edit}
+            <Button color="primary" size="small" variant="contained" onClick={() => actions.handleClick(data.id)}>Details</Button>
             <IconButton
               className={clsx(classes.expand, {
                 [classes.expandOpen]: expanded,

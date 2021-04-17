@@ -5,6 +5,8 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
+import IconButton from '@material-ui/core/IconButton';
+import ClearIcon from '@material-ui/icons/Clear';
 import { withStyles } from '@material-ui/core/styles';
 
 const styles = (theme) => ({
@@ -28,8 +30,9 @@ const styles = (theme) => ({
 });
 
 function ListToolBar(props) {
-  const { classes, actions } = props;
-  const { handleAdd, handleChange } = actions;
+  const { classes, actions, searchTerm } = props;
+
+  const { handleAdd, handleChange, handleClear } = actions;
   return (
     <AppBar className={classes.searchBar} position="static" color="default" elevation={0}>
       <Toolbar>
@@ -40,6 +43,7 @@ function ListToolBar(props) {
             <TextField
               fullWidth
               placeholder="Search"
+              value={searchTerm}
               InputProps={{
                 disableUnderline: true,
                 className: classes.searchInput,
@@ -49,6 +53,12 @@ function ListToolBar(props) {
           </Grid>
           { handleAdd ?
           <Grid item>
+            {searchTerm ? <IconButton
+              onClick={handleClear}
+              aria-label="clear search"
+            >
+              <ClearIcon />
+            </IconButton> : ''}
             <Button variant="contained" color="primary" className={classes.add} onClick={handleAdd}>
               Add
             </Button>

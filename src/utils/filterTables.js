@@ -9,12 +9,12 @@ const tables = () => {
   })
 }
 
-export const filterTables = (table, position) => tables().filter(item => {
+export const filterTables = (table) => tables().filter(item => {
   if (table.field) {
     item.field = table.field
     item.alias = table.type
   }
-  return item.name === table.table || item.name === position;
+  return item.name === table.table;
 })
 
 

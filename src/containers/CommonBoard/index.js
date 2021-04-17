@@ -8,7 +8,6 @@ import TocIcon from '@material-ui/icons/Toc';
 import ListView from '../../components/ListView';
 import CardView from '../../components/CardView';
 import GroupByDateCard from '../../components/GroupByDateCard';
-import AdminContextProvider from '../../contexts/AdminContext';
 import { AdminContext } from '../../contexts/AdminContext';
 import { getColumnType } from './columns';
 import { paperStylesTable } from '../../styles/paper';
@@ -25,19 +24,19 @@ function CommonBoard(props) {
   const table = match.params.table;
   const columnData = getColumnType(table);
   const showCard = useMediaQuery('(max-width:1023px)');
-  const getListView = (rows, actions) => {
+  const getListView = (rows, actions, searchTerm) => {
     return (
       <Paper className={classes.paper}>
-        <ListView history={history} actions={actions} rows={rows} columns={columnData} order_by="name"/>
+        <ListView history={history} actions={actions} rows={rows} columns={columnData} order_by="name" searchTerm={searchTerm}/>
       </Paper>
     )
   }
 
-  const getCardView = ( rows, table, tables, actions ) => {
+  const getCardView = ( rows, table, tables, actions, searchTerm ) => {
     return (
       <React.Fragment>
-      {table === 'loads' ? <GroupByDateCard history={history} actions={actions} rows={rows} tables={tables} columns={columnData} table={table}/> :
-      <CardView history={history} actions={actions} rows={rows} columns={columnData} table={table}/>}
+      {table === 'loads' ? <GroupByDateCard history={history} actions={actions} rows={rows} tables={tables} columns={columnData} table={table} searchTerm={searchTerm}/> :
+      <CardView history={history} actions={actions} rows={rows} columns={columnData} table={table} searchTerm={searchTerm}/>}
       </React.Fragment>
     )
   }
@@ -47,12 +46,10 @@ function CommonBoard(props) {
   }
 
   return (
-    <AdminContextProvider table={table} history={history}>
       <AdminContext.Consumer>{(context) => {
-        const { tableData, rows, filteredRecords, searchTerm } = context;
+        const { tableData, rows, filteredRecords, searchTerm, getData } = context;
         const actions = getActions(table, history, context);
         const data = searchTerm.length ?  filteredRecords : rows
-
         return (
           <Grid container spacing={3}>
             <div className="viewOptions">
@@ -61,14 +58,13 @@ function CommonBoard(props) {
                 </IconButton>
             </div>
             <Grid item xs={12}>
-                {showCard || (!showCard && showGrid) ? getCardView(data, table, tableData, actions) : getListView(data, actions)}
+                {showCard || (!showCard && showGrid) ? getCardView(data, table, tableData, actions, searchTerm) : getListView(data, actions, searchTerm)}
             </Grid>
           </Grid>
 
         )
       }}
       </AdminContext.Consumer>
-    </AdminContextProvider>
   )
 }
 

@@ -30,13 +30,13 @@ export const getInvoiceRowData = (rows, tables) => {
     // newRow.edit = editButton(row.id);
     newRow.ServiceDate = new Date(row.ServiceDate).toLocaleString();
     newRow['*DueDate'] = new Date(row['*DueDate']).toLocaleString();
-    // newRow.view = row['*InvoiceNo'] ? viewLoadButton(row['*InvoiceNo'].split('-')[0], actions) : false; // get load id
-    newRow.billed = row.billed === "0" ? "No" : "Yes";
+    newRow.loadId = row['*InvoiceNo'].split('-')[0]; // get load id
+    newRow.billed = row.billed === "0" ? false : true;
 
     if(tables.brokers && tables.brokers.length) {
       tables.brokers.map(broker => {
         if (broker.id === row.brokerid) {
-          // newRow.broker = viewBrokerButton(broker.id, broker.name, actions);
+          newRow.brokerName = broker.name
         }
         return newRow
       })

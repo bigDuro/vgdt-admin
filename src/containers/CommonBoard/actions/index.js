@@ -3,7 +3,7 @@ import { getLoadsActions } from './loads';
 import { getCommonActions } from './common';
 
 export const getActions = (table, history, context) => {
-  const common = getCommonActions(table, history);
+  const common = getCommonActions(table, history, context);
   const invoices = getInvoiceActions(table, history, context);
   const loads = getLoadsActions(table, history, context);
 

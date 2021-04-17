@@ -6,14 +6,11 @@ import Paper from '@material-ui/core/Paper';
 import LockIcon from '@material-ui/icons/Lock';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import AdminContextProvider from '../../contexts/AdminContext';
 import { AdminContext } from '../../contexts/AdminContext';
 import { paperStyles } from '../../styles/paper';
 import { getSchemaType, getFormData } from  './Schemas/';
-import { addItemsToSchema } from '../../utils/addItemsToSchema';
 import { formatData } from '../../utils/formatData';
 import { requiredData } from '../../utils/requiredData';
-import { filterTables } from '../../utils/filterTables';
 import { getActions } from './actions/'
 import './index.scss';
 
@@ -22,46 +19,22 @@ import './index.scss';
 function CommonForm(props) {
   const classes = paperStyles();
   const { history, match } = props;
-  const recordId = match.params.id;
   const table = match.params.table;
-  const position = match.params.position;
+  const recordId = match.params.id
   const updateTable = match.params.updateTable
-  const recordIdToUpdate = match.params.recordIdToUpdate
-  const schemaTyle = position || table;
-  const schema = getSchemaType(schemaTyle);
-  const [updatedSchema, setUpdatedSchema] = React.useState({...schema.JSONSchema});
-  const [loaded, setLoaded] = React.useState(false);
+  const recordIdToUpdate = match.params.recordIdToUpdate;
+  const data = getFormData(table);
+  // const [formData, setFormData] = React.useState(formatData(table, data.formData));
   const [disabled, setdisabled] = React.useState(false);
   return (
-    <AdminContextProvider>
       <AdminContext.Consumer>{(context) => {
-        const { record, getRecord, getAllRecords } = context;
-        const formData = record['id'] ? record : getFormData(schemaTyle).formData;
+        const { record, tableData } = context;
         const actions = getActions(context, table, history);
-
-        const refreshData = (config) => {
-          const { route, alias, field } = config;
-          getAllRecords(route).then(data => {
-            const updated = {
-              ...updatedSchema,
-                properties: {
-                  ...updatedSchema.properties,
-                    [alias]: addItemsToSchema(updatedSchema.properties[alias], data, alias, field)
-                }
-            }
-            setUpdatedSchema({
-              ...updatedSchema,
-              [alias]: updated[alias]
-            }
-          );
-            return updated
-          });
-        }
-
+        const formData = recordId ? record : formatData(table, data.formData)
+        const schema = getSchemaType(table, tableData);
         const handleLockToggle = (e) => {
           e.preventDefault();
           setdisabled(!disabled);
-          // setRecord(table, record);
         }
 
         const handleBack = (e) => {
@@ -73,25 +46,6 @@ function CommonForm(props) {
           actions.handleSave(formData, updateTable, recordIdToUpdate);
         }
 
-        if(!loaded) {
-          setLoaded(true);
-          if(recordId) {
-            getRecord(table, recordId).then(data => {
-              return data
-            });
-          }
-
-
-          if(requiredData[table] && requiredData[table].length) {
-            requiredData[table].map(item => {
-              const data = filterTables(item, position);
-              if(data[0]) {
-                refreshData(data[0]);
-              }
-              return item
-            })
-          }
-        }
 
         return (
           <Grid container spacing={3}>
@@ -111,14 +65,14 @@ function CommonForm(props) {
                     <ArrowBackIcon/>
                   </Button>
                 </div>
-                {loaded && updatedSchema ? <Form
-                  schema={updatedSchema}
+                {formData ? <Form
+                  schema={schema.JSONSchema}
                   uiSchema={schema.UISchema}
-                  formData={formatData(table, formData)}
+                  formData={formData}
                   onSubmit={(data) => handleSave(data.formData)}
                   disabled={disabled}
-                  onChange={(data) => actions.handleChange(data.formData, disabled, setdisabled)}>
-                </Form> : 'No Form Config'}
+                  onChange={(data) => actions.handleChange(data.formData)}>
+                </Form> : 'No Form Data'}
               </div>
               </Paper>
             </Grid>
@@ -126,7 +80,6 @@ function CommonForm(props) {
         )
       }}
       </AdminContext.Consumer>
-    </AdminContextProvider>
   )
 }
 

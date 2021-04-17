@@ -1,5 +1,4 @@
 const getInvoiceItemsWithIds = (ids, records) => {
-
   const idsToDelete = [];
   const invoiceId = [];
   ids.map(id => {
@@ -20,63 +19,62 @@ const getInvoiceItemsWithIds = (ids, records) => {
     })
     return id
   })
-
   return idsToDelete;
 }
 
 
 export const getInvoiceActions = (table, history, context) => {
-  const { tableData } = context;
-  // const refreshData = (store) => {
-  //   getAllRecords(store).then(data => {
-  //     setTableData(store, data);
-  //     return data
-  //   });
-  // }
+  const { saveRecord, getData, exportRecordToCSV, tableData, deleteRecord, getRecord } = context;
   return {
     handleClick: false,
     handleLoadClick: (e, id) => {
       e.preventDefault();
-      history.push(`loads/${id}`);
+      getData('loads', false).then(response => {
+        console.log('got Loads data');
+        getRecord('loads', id).then(data => {
+          history.push(`loads/${id}`);
+          return true
+        })
+      })
     },
     handleBrokerClick: (e, id) => {
       e.preventDefault();
-      history.push(`brokers/${id}`);
+      getRecord('brokers', id).then(data => {
+        history.push(`brokers/${id}`);
+        return true
+      })
+
     },
     handleAdd: false,
     handleDelete: (ids) => {
-      // const idsToDelete = getInvoiceItemsWithIds(ids, tableData[table]);
-      // deleteRecord(table, idsToDelete).then(data => {
-      //   refreshData(table)
-      // });
-    },
-    handleChange: (e) => {
-      e.preventDefault();
-      // const fields = filterFields;
-      // filterRecords(table, fields, e.target.value)
+      const idsToDelete = getInvoiceItemsWithIds(ids, tableData[table]);
+      deleteRecord(table, idsToDelete).then(data => {
+        getData(table, true);
+      });
     },
     handleExport: (ids) => {
       const idsToExport = getInvoiceItemsWithIds(ids, tableData[table]);
-      tableData[table].filter(record => {
+      const recordsToExport = tableData[table].filter(record => {
         return idsToExport.includes(record.id);
       }).reverse()
 
-      // exportRecordToCSV(table, recordsToExport).then(data => {
-      //   ids.map(id => {
-      //     const record = {
-      //       id,
-      //       billed: "1"
-      //     };
-      //     saveRecord(table, record).then( data => {
-      //       refreshData(table);
-      //       return data
-      //     })
-      //   })
-      //
-      //   console.log(data);
-      // }).catch(e => {
-      //   console.log(e);
-      // })
+      exportRecordToCSV(table, recordsToExport).then(data => {
+        ids.map(id => {
+          const record = {
+            id,
+            billed: "1"
+          };
+          saveRecord(table, record).then( data => {
+            getData(table, true);
+            return data
+          })
+          return false
+        })
+
+        console.log(data);
+      }).catch(e => {
+        console.log(e);
+      })
     }
   }
 }

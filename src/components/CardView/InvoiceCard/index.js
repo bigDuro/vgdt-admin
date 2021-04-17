@@ -10,6 +10,7 @@ import Collapse from '@material-ui/core/Collapse';
 import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
+import { Link } from '@material-ui/core';
 import { red, green, grey } from '@material-ui/core/colors';
 import LocalShippingIcon from '@material-ui/icons/LocalShipping';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
@@ -60,10 +61,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function InvoiceCard(props) {
-  const { data, selected, setSelected } = props;
+  const { data, selected, setSelected, actions } = props;
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
-  const isBilled = data.billed === "Yes";
+  const isBilled = data.billed;
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -88,7 +89,7 @@ export default function InvoiceCard(props) {
             </div>
           }
           title={`Customer`}
-          subheader={data.broker}
+          subheader={<Link color="primary" href="#" onClick={(e) => actions.handleBrokerClick(e, data.brokerid)}>{data.brokerName}</Link>}
         />
       </Grid>
       <Grid item xs={12}>
@@ -121,7 +122,7 @@ export default function InvoiceCard(props) {
             </Avatar>
           }
           title={`${data.ServiceDate}`}
-          subheader={data.view}
+          subheader={<Link color="primary" href="#" onClick={(e) => actions.handleLoadClick(e, data.loadId)}>Load Details: {data.loadId}</Link>}
         />
         </Grid>
       </Grid>

@@ -11,34 +11,34 @@ import ListToolBar from '../ListToolBar';
 import EnhancedTableToolbar from '../ListActionBar';
 
 const CardView = (props) => {
-  const { rows, table, actions } = props;
+  const { rows, table, actions, searchTerm } = props;
   const isMobile = useMediaQuery('(max-width:1023px)');
   const [ selected, setSelected ] = React.useState([]);
-  const cardTypes = (type, row, indx, handleSelected) => {
+  const cardTypes = (type, row, indx, handleSelected, actions) => {
     const types = {
       loads: (
         <Grid item xs={12} key={indx} id={row.id}>
-          <LoadCard key={indx} data={row} isMobile={isMobile} selected={selected} setSelected={handleSelected}/>
+          <LoadCard key={indx} data={row} isMobile={isMobile} selected={selected} setSelected={handleSelected} actions={actions}/>
         </Grid>),
       users: (
         <Grid item xs={12} sm={6} md={6} lg={4} key={indx} id={row.id}>
-          <UserCard key={indx} data={row} isMobile={isMobile} selected={selected} setSelected={handleSelected}/>
+          <UserCard key={indx} data={row} isMobile={isMobile} selected={selected} setSelected={handleSelected} actions={actions}/>
         </Grid>),
       brokers: (
         <Grid item xs={12} sm={6} md={6} lg={4} key={indx} id={row.id}>
-          <BrokerCard key={indx} data={row} isMobile={isMobile} selected={selected} setSelected={handleSelected}/>
+          <BrokerCard key={indx} data={row} isMobile={isMobile} selected={selected} setSelected={handleSelected} actions={actions}/>
         </Grid>),
       invoices: (
         <Grid item xs={12} sm={6} md={6} lg={4} key={indx} id={row.id}>
-          <InvoiceCard key={indx} data={row} isMobile={isMobile} selected={selected} setSelected={handleSelected}/>
+          <InvoiceCard key={indx} data={row} isMobile={isMobile} selected={selected} setSelected={handleSelected} actions={actions}/>
         </Grid>),
       employees: (
         <Grid item xs={12} sm={6} md={6} lg={4} key={indx} id={row.id}>
-          <EmployeeCard key={indx} data={row} isMobile={isMobile} selected={selected} setSelected={handleSelected}/>
+          <EmployeeCard key={indx} data={row} isMobile={isMobile} selected={selected} setSelected={handleSelected} actions={actions}/>
         </Grid>),
       equipment: (
         <Grid item xs={12} sm={6} md={6} lg={4} key={indx} id={row.id}>
-          <EquipmentCard key={indx} data={row} isMobile={isMobile} selected={selected} setSelected={handleSelected}/>
+          <EquipmentCard key={indx} data={row} isMobile={isMobile} selected={selected} setSelected={handleSelected} actions={actions}/>
         </Grid>),
     }
     return types[type] || 'No Card View!'
@@ -66,11 +66,11 @@ const CardView = (props) => {
     <React.Fragment>
       <Grid container spacing={1}>
         <Grid item xs={12}>
-            <ListToolBar actions={actions}/>
+            <ListToolBar actions={actions} searchTerm={searchTerm}/>
             <EnhancedTableToolbar numSelected={selected.length} {...actions} selected={selected} setSelected={setSelected}/>
         </Grid>
       {rows && rows.length ? rows.map((row, indx) => {
-        return cardTypes(table, row, indx, handleSelected)
+        return cardTypes(table, row, indx, handleSelected, actions)
       }) : ''}
 
      </Grid>

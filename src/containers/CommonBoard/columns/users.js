@@ -20,11 +20,5 @@ export const users = [
     label: 'Company',
     align: 'center',
     numeric: false
-  },
-  {
-    id: 'edit',
-    label: '',
-    align: 'center',
-    numeric: false
   }
 ]

@@ -1,34 +1,27 @@
 import { generateInvoiceItems } from '../../../utils/generateInvoice'
 
 export const getLoadsActions = (table, history, context) => {
-  const { rows, saveRecord, filterRecords, deleteRecord, setDriver, getData, driver, tableData, getRecord } = context;
-  const { brokers } = tableData;
+  const { rows, saveRecord, filterRecords, setDriver, getData, driver, tableData, getRecord, setRecord } = context;
+  const { brokers, equipment } = tableData;
   return {
-      handleClick: (id) => {
-        history.push(`${table}/${id}`);
-      },
       handleBrokerClick: (e, loadId, brokerId) => {
         e.preventDefault();
         if(brokerId !== 'addNew'){
-          history.push(`brokers/${brokerId}`);
+          getRecord('brokers', brokerId).then(data => {
+            history.push(`brokers/${brokerId}`);
+            return true
+          })
+
         }else {
+          setRecord(false);
           history.push(`brokers/add/${table}/${loadId}`);
         }
-
+        filterRecords(loadId)
       },
       handleChange: (e) => {
         e.preventDefault();
         setDriver('');
         filterRecords(e.target.value)
-      },
-      handleAdd: () => {
-        history.push(`${table}/add`);
-      },
-      handleRefresh: false,
-      handleDelete: (ids) => {
-        deleteRecord(table, ids).then(data => {
-          getData(table)
-        });
       },
       handleExport: false,
       handleCreateInvoice: (selected, isClicked) => {
@@ -37,7 +30,7 @@ export const getLoadsActions = (table, history, context) => {
           const broker = brokers.filter(b => b.id === load.broker)[0];
           if(load && load.status === 'Completed' && load.broker !== 'addNew') {
             if(isClicked) {
-              const invoiceItems = generateInvoiceItems(load, broker);
+              const invoiceItems = generateInvoiceItems(load, broker, equipment);
               if(invoiceItems.length) {
                 invoiceItems.map(invoice => {
                   if (invoice) {
@@ -45,13 +38,14 @@ export const getLoadsActions = (table, history, context) => {
                       return data
                     });
                   }
+                  return false
                 })
                 // update load status
                 getRecord(table, id).then(load => {
                   const updatedLoad = { ...load };
                   updatedLoad.status = "Billed";
                   saveRecord(table, updatedLoad).then(data => {
-                    getData(table)
+                    getData(table, true)
                   })
                 })
               }
@@ -70,7 +64,7 @@ export const getLoadsActions = (table, history, context) => {
             id, status
           }
           saveRecord(table, record).then(data => {
-            getData(table)
+            getData(table, true)
           })
         })
       },
@@ -79,6 +73,10 @@ export const getLoadsActions = (table, history, context) => {
         filterRecords(driver)
       },
       getDriver: () => driver,
-      getDrivers: () => ''
+      getDrivers: () => '',
+      handleClear: () => {
+        filterRecords('');
+        setDriver('');
+      }
     }
 }

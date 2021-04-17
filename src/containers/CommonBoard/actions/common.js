@@ -1,34 +1,34 @@
-export const getCommonActions = (table, history) => {
-  // const store = table;
-  // const refreshData = (store) => {
-  //   getAllRecords(store).then(data => {
-  //     setTableData(store, data);
-  //     return data
-  //   });
-  // }
+export const getCommonActions = (table, history, context) => {
+  const { filterRecords, deleteRecord, getData, getRecord, setRecord } = context;
   return {
       handleClick: (id) => {
-        history.push(`${table}/${id}`);
+        getRecord(table, id).then(data => {
+          filterRecords(id)
+          history.push(`${table}/${id}`);
+          return true
+        })
       },
       handleChange: (e) => {
         e.preventDefault();
-        // const fields = filterFields;
-        // filterRecords(table, fields, e.target.value)
-        console.log('handleChange');
+        filterRecords(e.target.value)
       },
       handleAdd: () => {
-        history.push(`${table}/add`);
+        setRecord(false);
+        getData(table, true).then(response => {
+          history.push(`${table}/add`);
+          return true
+        })
       },
-      handleRefresh: false,
+      handleRefresh: (tbl) => {
+        getData(table, true)
+      },
       handleDelete: (ids) => {
-        // deleteRecord(table, ids).then(data => {
-        //   refreshData(store)
-        // });
-        console.log('handleDelete');
+        deleteRecord(table, ids).then(data => {
+          getData(table, true)
+        });
       },
-      handleExport: false,
-      handleStatus: false,
-      getDriver: () => '',
-      getDrivers: () => []
+      handleClear: () => {
+        filterRecords('');
+      }
     }
 }
