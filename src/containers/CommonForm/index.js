@@ -10,7 +10,6 @@ import { AdminContext } from '../../contexts/AdminContext';
 import { paperStyles } from '../../styles/paper';
 import { getSchemaType, getFormData } from  './Schemas/';
 import { formatData } from '../../utils/formatData';
-import { requiredData } from '../../utils/requiredData';
 import { getActions } from './actions/'
 import './index.scss';
 
@@ -24,7 +23,6 @@ function CommonForm(props) {
   const updateTable = match.params.updateTable
   const recordIdToUpdate = match.params.recordIdToUpdate;
   const data = getFormData(table);
-  // const [formData, setFormData] = React.useState(formatData(table, data.formData));
   const [disabled, setdisabled] = React.useState(false);
   return (
       <AdminContext.Consumer>{(context) => {

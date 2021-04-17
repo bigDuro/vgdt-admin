@@ -1,5 +1,5 @@
 export const getLoadActions = (context, table, history) => {
-  const { setRecord } = context;
+  // const { setRecord } = context;
   return {
     // handleSave: (record) => {
     //   // console.log('record: ', record.file);

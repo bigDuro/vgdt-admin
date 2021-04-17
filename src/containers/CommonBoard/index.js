@@ -47,7 +47,7 @@ function CommonBoard(props) {
 
   return (
       <AdminContext.Consumer>{(context) => {
-        const { tableData, rows, filteredRecords, searchTerm, getData } = context;
+        const { tableData, rows, filteredRecords, searchTerm } = context;
         const actions = getActions(table, history, context);
         const data = searchTerm.length ?  filteredRecords : rows
         return (
