@@ -9,24 +9,21 @@ function AssetManager(props) {
   const { history, match } = props;
   const id = match.params.id;
   const handleBackClick = () => {
-    history.push(`/vgdt-admin/loads/${id}`);
+    history.goBack();
   }
   return (
-    <AdminContextProvider>
       <AdminContext.Consumer>{(context) => {
-
-
+        const { upload } = context;
         return (
           <div className="AssetManager">
             <div className="AssetManager_Back" onClick={handleBackClick}>
               <ArrowBackIcon/>
             </div>
-            <FileUploader/>
+            <FileUploader handleUpload={upload}/>
           </div>
         )
       }}
       </AdminContext.Consumer>
-    </AdminContextProvider>
   )
 }
 

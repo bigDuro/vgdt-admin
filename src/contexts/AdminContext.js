@@ -1,5 +1,5 @@
 import React, { Component, createContext } from 'react';
-import { get, save, deleteById, exportToCSV, getByID } from '../services/';
+import { get, save, deleteById, exportToCSV, getByID, uploadAssets } from '../services/';
 import { getUpdatedRows } from '../containers/CommonBoard/rows';
 import { formatData } from '../utils/formatData';
 
@@ -42,6 +42,7 @@ class AdminContextProvider extends Component {
     this.setTable = this.setTable.bind(this);
     this.getDriver = this.getDriver.bind(this);
     this.exportRecordToCSV = this.exportRecordToCSV.bind(this);
+    this.upload = this.upload.bind(this);
   }
 
   // componentDidMount() {
@@ -178,6 +179,12 @@ class AdminContextProvider extends Component {
     });
   }
 
+  upload(asset) {
+    uploadAssets(asset).then(data => {
+      console.log('Upload Done!! ', data);
+    })
+  }
+
   render() {
     return (
       <AdminContext.Provider
@@ -195,7 +202,8 @@ class AdminContextProvider extends Component {
           setTable: this.setTable,
           getDriver: this.getDriver,
           exportRecordToCSV: this.exportRecordToCSV,
-          getData: this.getData
+          getData: this.getData,
+          upload: this.upload
         }
       }>
         {this.props.children}

@@ -5,7 +5,7 @@ import PeopleIcon from '@material-ui/icons/People';
 import SupervisedUserCircleIcon from '@material-ui/icons/SupervisedUserCircle';
 import LocalShippingIcon from '@material-ui/icons/LocalShipping';
 import BusinessIcon from '@material-ui/icons/Business';
-
+import ImageIcon from '@material-ui/icons/Image';
 
 export const navigation = [
   {
@@ -72,4 +72,10 @@ export const navigation = [
   //   table: 'equipment',
   //   type: 'trailer'
   // },
+  {
+    name: 'Assets',
+    route: 'assets',
+    icon: (<ImageIcon />),
+    table: 'assets'
+  },
 ]

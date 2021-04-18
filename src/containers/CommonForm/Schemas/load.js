@@ -166,19 +166,6 @@ export const LoadJSONSchema = {
       "type": "boolean",
       "title": "TONU",
       "default": "false"
-    },
-    "ratecon": {
-      "type": "string",
-      "title": "Rate Contract",
-      "default": ""
-    },
-    "files": {
-      "type": "array",
-      "title": "Upload Ratecon",
-      "items": {
-        "type": "string",
-        "format": "data-url"
-      }
     }
   }
 }
