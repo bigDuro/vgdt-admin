@@ -81,7 +81,7 @@ export const uploadAssets = async (file, table, id) => {
 }
 
 export const getAssets = async (table, id) => {
-  const response = await fetch(`http://localhost:8888/public/api/assets/upload/${table}/${id}`);
+  const response = await fetch(`${env}/assets/upload/${table}/${id}`);
     const json = await response.json();
     return json;
 }
