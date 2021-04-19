@@ -1,11 +1,8 @@
-import React from 'react';
-import { Button } from '@material-ui/core';
-import Link from '@material-ui/core/Link';
-const viewLoadButton = (loadId, actions) => (<Link color="primary" href="#" onClick={(e) => actions.handleLoadClick(e, loadId)}>Load Details</Link>);
-const viewBrokerButton = (brokerid, name, actions) => (<Link color="primary" href="#" onClick={(e) => actions.handleBrokerClick(e, brokerid)}>{name}</Link>);
 
-export const getInvoiceRowData = (context, rows, actions) => {
-  const { tableData } = context;
+// const viewLoadButton = (loadId, actions) => (<Link color="primary" href="#" onClick={(e) => actions.handleLoadClick(e, loadId)}>Load Details</Link>);
+// const viewBrokerButton = (brokerid, name, actions) => (<Link color="primary" href="#" onClick={(e) => actions.handleBrokerClick(e, brokerid)}>{name}</Link>);
+
+export const getInvoiceRowData = (rows, tables) => {
   const formatProductServices = (records) => {
     const services = records.map(record => {
       return record.ProductService
@@ -33,13 +30,13 @@ export const getInvoiceRowData = (context, rows, actions) => {
     // newRow.edit = editButton(row.id);
     newRow.ServiceDate = new Date(row.ServiceDate).toLocaleString();
     newRow['*DueDate'] = new Date(row['*DueDate']).toLocaleString();
-    newRow.view = viewLoadButton(row['*InvoiceNo'].split('-')[0], actions); // get load id
-    newRow.billed = row.billed === "0" ? "No" : "Yes";
+    newRow.loadId = row['*InvoiceNo'].split('-')[0]; // get load id
+    newRow.billed = row.billed === "0" ? false : true;
 
-    if(tableData.brokers && tableData.brokers.length) {
-      tableData.brokers.map(broker => {
+    if(tables.brokers && tables.brokers.length) {
+      tables.brokers.map(broker => {
         if (broker.id === row.brokerid) {
-          newRow.broker = viewBrokerButton(broker.id, broker.name, actions);
+          newRow.brokerName = broker.name
         }
         return newRow
       })

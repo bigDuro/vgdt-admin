@@ -1,53 +1,122 @@
 import React, { Component, createContext } from 'react';
-import { get, getType, getByID, save, deleteById, exportToCSV, uploadAssets } from '../services/';
+import { get, save, deleteById, exportToCSV, getByID, uploadAssets, getAssets } from '../services/';
+import { getUpdatedRows } from '../containers/CommonBoard/rows';
+import { formatData } from '../utils/formatData';
 
 export const AdminContext = createContext();
+
+const getRequiredData = (table) => {
+  const tables = {
+    loads: ['brokers', 'employees', 'equipment'],
+    invoices: ['brokers']
+  }
+
+  return tables[table] || []
+}
 
 class AdminContextProvider extends Component {
   constructor(props) {
     super()
+    const { table, history } = props;
     this.state = {
+      record: {},
       filteredRecords: [],
       searchTerm: '',
-      record: {},
-      openModal: false,
       deleteRecord: {},
       exportToCSV: [],
       tableData: {},
-      table: ''
+      table: table,
+      driver: '',
+      history: history,
+      rows: [],
+      requiredData: [ table, ...getRequiredData(table) ],
+      assets: []
     }
+    this.getData = this.getData.bind(this);
+    this.getRecord = this.getRecord.bind(this);
+    this.setRecord = this.setRecord.bind(this);
     this.getAllRecords = this.getAllRecords.bind(this);
-    this.getAllRecordsByType = this.getAllRecordsByType.bind(this);
     this.saveRecord = this.saveRecord.bind(this);
     this.deleteRecord = this.deleteRecord.bind(this);
     this.filterRecords = this.filterRecords.bind(this);
-    this.setRecord = this.setRecord.bind(this);
-    this.setRecords = this.setRecords.bind(this);
-    this.getRecord = this.getRecord.bind(this);
-    this.addRecord = this.addRecord.bind(this);
-    this.updateRecord = this.updateRecord.bind(this);
-    this.exportRecordToCSV = this.exportRecordToCSV.bind(this);
-    this.setTableData = this.setTableData.bind(this);
+    this.setDriver = this.setDriver.bind(this);
     this.setTable = this.setTable.bind(this);
-    this.uploadAssets = this.uploadAssets.bind(this);
+    this.getDriver = this.getDriver.bind(this);
+    this.exportRecordToCSV = this.exportRecordToCSV.bind(this);
+    this.upload = this.upload.bind(this);
+    this.getAssetsFor = this.getAssetsFor.bind(this);
   }
 
+  // componentDidMount() {
+  //   this.getData(this.state.table).then(response => {
+  //     console.log('getData(table):: ', response);
+  //   })
+  // }
 
-
-  async getAllRecords(table) {
-    const response = await get(table);
-    this.setState({
-      [table]: [...response]
+  getData(table, setRows) {
+    const getDataPromise = new Promise((resolve, reject) => {
+      const dataTables = [ table, ...getRequiredData(table) ];
+      if(dataTables)
+      Promise.all(dataTables.map(async (tbl) => {
+        return this.getAllRecords(tbl);
+      })).then(d => {
+        const data = d.reduce((model, m) => {
+          model = {
+            ...model,
+            ...m
+          }
+          return model
+        }, {})
+        const rows = setRows ? getUpdatedRows(table, data) : this.state.rows;
+        this.setState({
+          tableData: {...this.state.tableData, ...data},
+          rows,
+          table
+        }, () => {
+          resolve(true)
+        })
+      }).catch(e => {
+        console.log('error:: ', e)
+        reject(e)
+      })
     })
-    return response;
+    this.setState({
+      filteredRecords: [],
+      // rows: setRows ? [] : this.state.rows,
+      driver: '',
+      searchTerm: '',
+      requiredData: [ table, ...getRequiredData(table) ]
+    })
+    return getDataPromise
   }
 
-  async getAllRecordsByType(table, type) {
-    const response = await getType(table, type);
-    this.setState({
-      [table]: [...response]
+  getAllRecords(table) {
+    const getAllRecordsPromise = new Promise((resolve, reject) => {
+      get(table).then(data => {
+        resolve({[table]: data})
+      });
     })
-    return response;
+    return getAllRecordsPromise;
+  }
+
+  getRecord(table, id) {
+    const getByIDPromise = new Promise((resolve, reject) => {
+      getByID(table, id).then(data => {
+        const record = formatData(table, data);
+        this.setState({
+          record
+        })
+        resolve(data)
+      });
+    })
+
+    return getByIDPromise;
+  }
+
+  setRecord(record) {
+    this.setState({
+      record
+    });
   }
 
   async exportRecordToCSV(table, records) {
@@ -55,15 +124,11 @@ class AdminContextProvider extends Component {
     return response
   }
 
-  async uploadAssets(table, records, id) {
-    const response = await uploadAssets(table, records, id);
-    return response
-  }
 
   async saveRecord(table, record) {
     const response = await save(table, record);
     this.setState({
-      record: {...record}
+      record
     })
     return response
   }
@@ -78,76 +143,64 @@ class AdminContextProvider extends Component {
     })
   }
 
-  filterRecords(table, fields, searchTerm) {
+
+  filterRecords(searchTerm) {
+    const fields = Object.keys(this.state.rows[0]);
+    const filteredRecords = [];
+    const cacheIDs = [];
     if(fields.length) {
-      const results = fields.map(field => {
-        return this.state.tableData[table].filter(record => record[field] && record[field].toLowerCase().includes(searchTerm.toLowerCase()));
-      })
-
-      const filteredRecords = [];
-
-      results.map(result => {
-        result.map(rec => {
-          filteredRecords.push(rec)
-          return rec
-        })
-        return result
+      fields.map(field => {
+        return this.state.rows.filter(record => {
+          if(!cacheIDs.includes(record.id) && record[field] && record[field].length && (record[field].toLowerCase().includes(searchTerm.toLowerCase()))) {
+            cacheIDs.push(record.id)
+            filteredRecords.push(record)
+          }
+          return true
+        });
       })
       this.setState({
-        filteredRecords: filteredRecords,
+        filteredRecords,
         searchTerm
       })
     }
   }
-
-  setRecord(table, record) {
+  setDriver(driver) {
     this.setState({
-      record: {...record}
-    })
-  }
-
-  setRecords(table, records, callback) {
-    this.setState({
-      [table]: {...records}
-    })
-  }
-
-  async getRecord(table, id) {
-    const response = await getByID(table, id);
-    this.setState({
-      record: {...response}
-    });
-    return response
-  }
-
-  addRecord(table, record) {
-    this.setState({
-      [table]: [...this.state[table], {...record}]
+      driver
     });
   }
 
-  setTableData(table, data) {
-    this.setState({
-      tableData: {
-        ...this.state.tableData,
-        [table]: data
-      }
-    });
+  getDriver() {
+    return this.state.driver
   }
+
   setTable(table) {
     this.setState({
-      table,
-      [table]: [...this.state.tableData[table]]
+      table
     });
   }
 
-  updateRecord(table, event) {
-    const name = event.target.name;
-    this.setState({
-      record: {
-        ...this.state.record,
-        [name]: event.target.value}
+  upload(asset, table, id) {
+    uploadAssets(asset, table, id).then(data => {
+      console.log('Upload Done!! ', data);
+      this.setState({
+        assets: [...data]
+      })
     })
+  }
+
+  getAssetsFor(table, id) {
+    const getAssetsForPromise = new Promise((resolve, reject) => {
+      getAssets(table, id).then(data => {
+        this.setState({
+          assets: [...data]
+        })
+        resolve(data)
+      })
+    })
+
+
+    return getAssetsForPromise
   }
 
   render() {
@@ -157,17 +210,19 @@ class AdminContextProvider extends Component {
           addRecord: this.addRecord,
           filterRecords: this.filterRecords,
           getRecord: this.getRecord,
+          setRecord: this.setRecord,
           getAllRecordsByType: this.getAllRecordsByType,
           saveRecord: this.saveRecord,
           deleteRecord: this.deleteRecord,
           updateRecord: this.updateRecord,
           getAllRecords: this.getAllRecords,
-          setRecord: this.setRecord,
-          setRecords: this.setRecords,
-          exportRecordToCSV: this.exportRecordToCSV,
-          setTableData: this.setTableData,
+          setDriver: this.setDriver,
           setTable: this.setTable,
-          uploadAssets: this.uploadAssets
+          getDriver: this.getDriver,
+          exportRecordToCSV: this.exportRecordToCSV,
+          getData: this.getData,
+          upload: this.upload,
+          getAssetsFor: this.getAssetsFor
         }
       }>
         {this.props.children}

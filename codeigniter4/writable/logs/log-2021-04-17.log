@@ -1,0 +1,82 @@
+CRITICAL - 2021-04-17 12:55:22 --> Request URI segment is our of range: 2
+#0 /Users/bigDuro/Documents/gitHub/vgdt-admin/codeigniter4/system/HTTP/URI.php(485): CodeIgniter\HTTP\Exceptions\HTTPException::forURISegmentOutOfRange(2)
+#1 /Users/bigDuro/Documents/gitHub/vgdt-admin/codeigniter4/app/Views/demos/uploads/index.php(13): CodeIgniter\HTTP\URI->getSegment(2)
+#2 /Users/bigDuro/Documents/gitHub/vgdt-admin/codeigniter4/system/View/View.php(246): include('/Users/bigDuro/...')
+#3 /Users/bigDuro/Documents/gitHub/vgdt-admin/codeigniter4/system/Common.php(1087): CodeIgniter\View\View->render('demos/uploads/i...', Array, true)
+#4 /Users/bigDuro/Documents/gitHub/vgdt-admin/codeigniter4/app/Controllers/Home.php(7): view('demos/uploads/i...')
+#5 /Users/bigDuro/Documents/gitHub/vgdt-admin/codeigniter4/system/CodeIgniter.php(914): App\Controllers\Home->index()
+#6 /Users/bigDuro/Documents/gitHub/vgdt-admin/codeigniter4/system/CodeIgniter.php(400): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+#7 /Users/bigDuro/Documents/gitHub/vgdt-admin/codeigniter4/system/CodeIgniter.php(308): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 /Users/bigDuro/Documents/gitHub/vgdt-admin/public/api/index.php(45): CodeIgniter\CodeIgniter->run()
+#9 {main}
+CRITICAL - 2021-04-17 12:55:26 --> Request URI segment is our of range: 2
+#0 /Users/bigDuro/Documents/gitHub/vgdt-admin/codeigniter4/system/HTTP/URI.php(485): CodeIgniter\HTTP\Exceptions\HTTPException::forURISegmentOutOfRange(2)
+#1 /Users/bigDuro/Documents/gitHub/vgdt-admin/codeigniter4/app/Views/demos/uploads/index.php(13): CodeIgniter\HTTP\URI->getSegment(2)
+#2 /Users/bigDuro/Documents/gitHub/vgdt-admin/codeigniter4/system/View/View.php(246): include('/Users/bigDuro/...')
+#3 /Users/bigDuro/Documents/gitHub/vgdt-admin/codeigniter4/system/Common.php(1087): CodeIgniter\View\View->render('demos/uploads/i...', Array, true)
+#4 /Users/bigDuro/Documents/gitHub/vgdt-admin/codeigniter4/app/Controllers/Home.php(7): view('demos/uploads/i...')
+#5 /Users/bigDuro/Documents/gitHub/vgdt-admin/codeigniter4/system/CodeIgniter.php(914): App\Controllers\Home->index()
+#6 /Users/bigDuro/Documents/gitHub/vgdt-admin/codeigniter4/system/CodeIgniter.php(400): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+#7 /Users/bigDuro/Documents/gitHub/vgdt-admin/codeigniter4/system/CodeIgniter.php(308): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 /Users/bigDuro/Documents/gitHub/vgdt-admin/public/api/index.php(45): CodeIgniter\CodeIgniter->run()
+#9 {main}
+CRITICAL - 2021-04-17 12:57:58 --> Request URI segment is our of range: 2
+#0 /Users/bigDuro/Documents/gitHub/vgdt-admin/codeigniter4/system/HTTP/URI.php(485): CodeIgniter\HTTP\Exceptions\HTTPException::forURISegmentOutOfRange(2)
+#1 /Users/bigDuro/Documents/gitHub/vgdt-admin/codeigniter4/app/Views/uploads.php(13): CodeIgniter\HTTP\URI->getSegment(2)
+#2 /Users/bigDuro/Documents/gitHub/vgdt-admin/codeigniter4/system/View/View.php(246): include('/Users/bigDuro/...')
+#3 /Users/bigDuro/Documents/gitHub/vgdt-admin/codeigniter4/system/Common.php(1087): CodeIgniter\View\View->render('uploads', Array, true)
+#4 /Users/bigDuro/Documents/gitHub/vgdt-admin/codeigniter4/app/Controllers/Home.php(7): view('uploads')
+#5 /Users/bigDuro/Documents/gitHub/vgdt-admin/codeigniter4/system/CodeIgniter.php(914): App\Controllers\Home->index()
+#6 /Users/bigDuro/Documents/gitHub/vgdt-admin/codeigniter4/system/CodeIgniter.php(400): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+#7 /Users/bigDuro/Documents/gitHub/vgdt-admin/codeigniter4/system/CodeIgniter.php(308): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 /Users/bigDuro/Documents/gitHub/vgdt-admin/public/api/index.php(45): CodeIgniter\CodeIgniter->run()
+#9 {main}
+CRITICAL - 2021-04-17 13:22:13 --> Call to a member function getName() on null
+#0 /Users/bigDuro/Documents/gitHub/vgdt-admin/codeigniter4/system/CodeIgniter.php(914): App\Controllers\Uploads->index()
+#1 /Users/bigDuro/Documents/gitHub/vgdt-admin/codeigniter4/system/CodeIgniter.php(400): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Uploads))
+#2 /Users/bigDuro/Documents/gitHub/vgdt-admin/codeigniter4/system/CodeIgniter.php(308): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#3 /Users/bigDuro/Documents/gitHub/vgdt-admin/public/api/index.php(45): CodeIgniter\CodeIgniter->run()
+#4 {main}
+CRITICAL - 2021-04-17 13:22:45 --> Call to a member function getName() on null
+#0 /Users/bigDuro/Documents/gitHub/vgdt-admin/codeigniter4/system/CodeIgniter.php(914): App\Controllers\Uploads->index()
+#1 /Users/bigDuro/Documents/gitHub/vgdt-admin/codeigniter4/system/CodeIgniter.php(400): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Uploads))
+#2 /Users/bigDuro/Documents/gitHub/vgdt-admin/codeigniter4/system/CodeIgniter.php(308): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#3 /Users/bigDuro/Documents/gitHub/vgdt-admin/public/api/index.php(45): CodeIgniter\CodeIgniter->run()
+#4 {main}
+CRITICAL - 2021-04-17 13:23:22 --> Call to a member function getName() on null
+#0 /Users/bigDuro/Documents/gitHub/vgdt-admin/codeigniter4/system/CodeIgniter.php(914): App\Controllers\Uploads->index()
+#1 /Users/bigDuro/Documents/gitHub/vgdt-admin/codeigniter4/system/CodeIgniter.php(400): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Uploads))
+#2 /Users/bigDuro/Documents/gitHub/vgdt-admin/codeigniter4/system/CodeIgniter.php(308): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#3 /Users/bigDuro/Documents/gitHub/vgdt-admin/public/api/index.php(45): CodeIgniter\CodeIgniter->run()
+#4 {main}
+CRITICAL - 2021-04-17 13:24:21 --> Call to a member function move() on null
+#0 /Users/bigDuro/Documents/gitHub/vgdt-admin/codeigniter4/system/CodeIgniter.php(914): App\Controllers\Uploads->index()
+#1 /Users/bigDuro/Documents/gitHub/vgdt-admin/codeigniter4/system/CodeIgniter.php(400): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Uploads))
+#2 /Users/bigDuro/Documents/gitHub/vgdt-admin/codeigniter4/system/CodeIgniter.php(308): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#3 /Users/bigDuro/Documents/gitHub/vgdt-admin/public/api/index.php(45): CodeIgniter\CodeIgniter->run()
+#4 {main}
+CRITICAL - 2021-04-17 13:24:32 --> Call to a member function move() on null
+#0 /Users/bigDuro/Documents/gitHub/vgdt-admin/codeigniter4/system/CodeIgniter.php(914): App\Controllers\Uploads->index()
+#1 /Users/bigDuro/Documents/gitHub/vgdt-admin/codeigniter4/system/CodeIgniter.php(400): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Uploads))
+#2 /Users/bigDuro/Documents/gitHub/vgdt-admin/codeigniter4/system/CodeIgniter.php(308): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#3 /Users/bigDuro/Documents/gitHub/vgdt-admin/public/api/index.php(45): CodeIgniter\CodeIgniter->run()
+#4 {main}
+CRITICAL - 2021-04-17 13:26:33 --> Call to a member function move() on null
+#0 /Users/bigDuro/Documents/gitHub/vgdt-admin/codeigniter4/system/CodeIgniter.php(914): App\Controllers\Uploads->index()
+#1 /Users/bigDuro/Documents/gitHub/vgdt-admin/codeigniter4/system/CodeIgniter.php(400): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Uploads))
+#2 /Users/bigDuro/Documents/gitHub/vgdt-admin/codeigniter4/system/CodeIgniter.php(308): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#3 /Users/bigDuro/Documents/gitHub/vgdt-admin/public/api/index.php(45): CodeIgniter\CodeIgniter->run()
+#4 {main}
+CRITICAL - 2021-04-17 13:32:35 --> Too few arguments to function CodeIgniter\HTTP\IncomingRequest::getFile(), 0 passed in /Users/bigDuro/Documents/gitHub/vgdt-admin/codeigniter4/app/Controllers/Uploads.php on line 18 and exactly 1 expected
+#0 /Users/bigDuro/Documents/gitHub/vgdt-admin/codeigniter4/app/Controllers/Uploads.php(18): CodeIgniter\HTTP\IncomingRequest->getFile()
+#1 /Users/bigDuro/Documents/gitHub/vgdt-admin/codeigniter4/system/CodeIgniter.php(914): App\Controllers\Uploads->index()
+#2 /Users/bigDuro/Documents/gitHub/vgdt-admin/codeigniter4/system/CodeIgniter.php(400): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Uploads))
+#3 /Users/bigDuro/Documents/gitHub/vgdt-admin/codeigniter4/system/CodeIgniter.php(308): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#4 /Users/bigDuro/Documents/gitHub/vgdt-admin/public/api/index.php(45): CodeIgniter\CodeIgniter->run()
+#5 {main}
+CRITICAL - 2021-04-17 13:34:55 --> Call to a member function move() on null
+#0 /Users/bigDuro/Documents/gitHub/vgdt-admin/codeigniter4/system/CodeIgniter.php(914): App\Controllers\Uploads->index()
+#1 /Users/bigDuro/Documents/gitHub/vgdt-admin/codeigniter4/system/CodeIgniter.php(400): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Uploads))
+#2 /Users/bigDuro/Documents/gitHub/vgdt-admin/codeigniter4/system/CodeIgniter.php(308): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#3 /Users/bigDuro/Documents/gitHub/vgdt-admin/public/api/index.php(45): CodeIgniter\CodeIgniter->run()
+#4 {main}

@@ -1,7 +1,7 @@
 import { getEnv } from '../config';
 import { INVOICE_DATES } from '../constants/';
 
-const env = getEnv('prod'); // local or prod
+export const env = getEnv('prod'); // local or prod
 
 export const get = async (type) => {
   const response = await fetch(`${env}/${type}`)
@@ -57,7 +57,6 @@ const formatItems = (items) => {
 export const exportToCSV = async (type, items) => {
   const records = formatItems(items);
   const body = JSON.stringify(records);
-  // console.log('body: ', body);
   const response = await fetch(`${env}/utils/export`, {
     method: 'post',
     body
@@ -69,32 +68,20 @@ export const exportToCSV = async (type, items) => {
   return csv;
 }
 
-export const uploadAssets = async (table, records, id) => {
-  const body = {
-    "metadata": {},
-    "file": records[0],
-  }
-
+export const uploadAssets = async (file, table, id) => {
   const formData = new FormData();
-  formData.append('file', records[0])
+  formData.append('file', file);
+  const response = await fetch(`${env}/assets/upload/${table}/${id}`, {
+    method: 'POST',
+    body: formData,
+  })
 
-  console.log("records: ", records);
+  const json = await response.json();
+  return json;
+}
 
-  // const request = new XMLHttpRequest();
-  // request.open('POST', `${env}/utils/upload/${id}`);
-  // request.send(formData);
-
-
-  // const response = await fetch(`${env}/utils/upload/${id}`, {
-  //   method: 'POST',
-  //   body: JSON.stringify(body)
-  // })
-  // .then(response => response.json())
-  // .then(data => {
-  //   console.log(data.path)
-  // })
-  // .catch(error => {
-  //   console.error(error)
-  // })
-  return formData;
+export const getAssets = async (table, id) => {
+  const response = await fetch(`${env}/assets/upload/${table}/${id}`);
+    const json = await response.json();
+    return json;
 }

@@ -32,11 +32,5 @@ export const brokers = [
     label: 'QuickPay',
     align: 'center',
     numeric: false
-  },
-  {
-    id: 'edit',
-    label: 'View',
-    align: 'center',
-    numeric: false
   }
 ]

@@ -27,11 +27,5 @@ export const employees = [
     label: 'Med Cert Expiration',
     align: 'center',
     numeric: false
-  },
-  {
-    id: 'edit',
-    label: '',
-    align: 'center',
-    numeric: false
   }
 ]

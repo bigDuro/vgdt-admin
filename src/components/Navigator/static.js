@@ -6,6 +6,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+import { AdminContext } from '../../contexts/AdminContext';
 import { navigation } from './menuItems';
 import favicon from '../../assets/favicon.png';
 import './index.scss';
@@ -53,10 +54,17 @@ const styles = (theme) => ({
 
 function Navigator(props) {
   const { history, classes } = props;
-  const navigate = (location) => {
-    history.push(`/vgdt-admin/${location}`);
-  }
   return (
+    <AdminContext.Consumer>{(context) => {
+      const { getData } = context;
+      const navigate = (location) => {
+        getData(location, true).then(response => {
+          history.push(`/vgdt-admin/${location}`);
+          return response;
+        })
+      }
+
+      return (
       <div className="navigator_static">
         <img
           src={favicon}
@@ -73,7 +81,9 @@ function Navigator(props) {
             </ListItem>
           ))}
         </List>
-      </div>
+      </div>)
+    }}
+    </AdminContext.Consumer>
   );
 }
 

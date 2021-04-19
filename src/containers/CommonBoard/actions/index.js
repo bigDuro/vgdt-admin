@@ -1,12 +1,11 @@
 import { getInvoiceActions } from './invoice';
 import { getLoadsActions } from './loads';
 import { getCommonActions } from './common';
-import { filterFields } from '../columns/filterFields';
 
-export const getActions = (context, table, db, history) => {
-  const common = getCommonActions(context, table, db, history, filterFields);
-  const invoices = getInvoiceActions(context, table, history, filterFields);
-  const loads = getLoadsActions(context, table, db, history, filterFields);
+export const getActions = (table, history, context) => {
+  const common = getCommonActions(table, history, context);
+  const invoices = getInvoiceActions(table, history, context);
+  const loads = getLoadsActions(table, history, context);
 
   const types = {
     invoices, loads

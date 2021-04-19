@@ -35,7 +35,9 @@ class LoadModel extends Model
       'tractor',
       'trailer',
       'ratecon',
-      'uploads'
+      'uploads',
+      'additionPay',
+      'breakdownPay'
     ];
 
     protected $useTimestamps = false;

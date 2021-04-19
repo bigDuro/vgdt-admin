@@ -24,11 +24,5 @@ export const equipment = [
     label: 'IRP',
     align: 'center',
     numeric: false
-  },
-  {
-    id: 'edit',
-    label: '',
-    align: 'center',
-    numeric: false
   }
 ]

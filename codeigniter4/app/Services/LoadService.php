@@ -1,5 +1,6 @@
 <?php namespace App\Services;
 use App\Models\LoadModel;
+use CodeIgniter\I18n\Time;
 
 // Get Load info takes connection and sql query
 class LoadService {
@@ -37,5 +38,17 @@ class LoadService {
      $model->delete([$record_id]);
 
      return $record;
+   }
+
+   public function getRecordByDate()
+   {
+     // $model = new LoadModel();
+     $date = Time::createFromDate(2021, 1, 1);
+     $model = new LoadModel();
+     $records = $model->orderBy('id', 'DESC')->findAll();
+
+     // $userModel->where('pickupDate', 1)->findAll();
+     // echo "string";
+     return $date;
    }
 }

@@ -4,31 +4,19 @@ import clsx from 'clsx';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
-import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Collapse from '@material-ui/core/Collapse';
 import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import { red, green, yellow, grey } from '@material-ui/core/colors';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import ShareIcon from '@material-ui/icons/Share';
+import { green, grey } from '@material-ui/core/colors';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-import Checkbox from '@material-ui/core/Checkbox';
-import DoneIcon from '@material-ui/icons/Done';
 import WatchLaterIcon from '@material-ui/icons/WatchLater';
-import PlayCircleFilledWhiteIcon from '@material-ui/icons/PlayCircleFilledWhite';
-import CheckCircleIcon from '@material-ui/icons/CheckCircle';
-import ErrorIcon from '@material-ui/icons/Error';
-import RoomIcon from '@material-ui/icons/Room';
-import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
-import PauseCircleFilledIcon from '@material-ui/icons/PauseCircleFilled';
-import ContactlessIcon from '@material-ui/icons/Contactless';
 import LocalShippingIcon from '@material-ui/icons/LocalShipping';
 import LoadCard from '../LoadCard';
-import { getWeek } from '../../../utils/getWeeks';
+import DriverWeek from './DriverWeek';
+import { getMomentWeek } from '../../../utils/dates';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -82,15 +70,17 @@ const icons = (type, classes) => {
 }
 
 export default function WeeklyCard(props) {
-  const { data, actions, isMobile, selected, handleSelected, expand } = props;
-  const currentWeek = getWeek(new Date());
+  const { data, actions, isMobile, selected, handleSelected, totals, week } = props;
+  const { getDriver } = actions;
+  const driver = getDriver();
+  const currentWeek = getMomentWeek(new Date());
   const classes = useStyles();
-  const [expanded, setExpanded] = React.useState(data.week === currentWeek);
-
+  const [expanded, setExpanded] = React.useState(week === currentWeek);
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
 
+  const partsOfWeek = week.split('-')
 
   return (
     <Card className={classes.root}>
@@ -106,40 +96,24 @@ export default function WeeklyCard(props) {
               <IconButton aria-label="settings">
               </IconButton>
             }
-            title={`${data.week === currentWeek ? 'Current Week: ' + data.week : data.week < currentWeek ? 'Week: ' + data.week  :  'Upcoming Week: ' + data.week}`}
+            title={`${week === currentWeek ? 'Current Week: ' + partsOfWeek[1] + ' | Year: ' + partsOfWeek[0]: week < currentWeek ? 'Week: ' + partsOfWeek[1] + ' | Year: ' + partsOfWeek[0]  :  'Upcoming Week: ' + partsOfWeek[1] + ' | Year: ' + partsOfWeek[0]}`}
           />
           <CardContent>
            <Typography variant="body2" color="textSecondary" component="p">
-             Total: ${data.rate}.00
+             Total: ${totals.rate}.00
            </Typography>
            <Typography variant="body2" color="textSecondary" component="p">
-             Total Miles: {parseInt(data.loadedMiles) + parseInt(data.deadHead)}
+             Total Miles: {parseInt(totals.loadedMiles) + parseInt(totals.deadHead)}
            </Typography>
            <Typography variant="body2" color="textSecondary" component="p">
-             Total Rate Per Mile: ${(parseInt(data.rate) / (parseInt(data.loadedMiles) + parseInt(data.deadHead))).toFixed(2)}
+             Total Rate Per Mile: ${(parseInt(totals.rate) / (parseInt(totals.loadedMiles) + parseInt(totals.deadHead))).toFixed(2)}
            </Typography>
           </CardContent>
         </Grid>
         <Grid item  xs={12} sm={12} md={6}>
-          <CardHeader
-            avatar={
-              <Avatar aria-label="pickup" className={""}>
-                {icons('Driver')}
-              </Avatar>
-            }
-            title={`${data.driverName}`}
-          />
-          <CardContent>
-            <Typography variant="body2" color="textSecondary" component="p">
-              Rate: {data.driverRate}
-            </Typography>
-            <Typography variant="body2" color="textSecondary" component="p">
-              Pay: {data.driverPay}
-            </Typography>
-            <Typography variant="body2" color="textSecondary" component="p">
-              Detention Pay: ${data.detentionPay}.00
-            </Typography>
-          </CardContent>
+        {driver !== '' ?
+          <DriverWeek driver={driver} totals={totals} icons={icons}/> : '' }
+
         </Grid>
       </Grid>
       <Grid container spacing={3}>
@@ -162,10 +136,10 @@ export default function WeeklyCard(props) {
         <Grid item xs={12}>
           <Collapse in={expanded} timeout="auto" unmountOnExit>
             <CardContent className={classes.CardContent}>
-                {data.rows.map((row, indx) => {
+                {data.map((row, indx) => {
                 return (
                     <Grid item xs={12} key={indx} id={row.id}>
-                      <LoadCard key={indx} data={row} isMobile={isMobile} selected={selected} setSelected={handleSelected}/>
+                      <LoadCard key={indx} data={row} isMobile={isMobile} selected={selected} setSelected={handleSelected} actions={actions}/>
                     </Grid>
                   )
                 })}

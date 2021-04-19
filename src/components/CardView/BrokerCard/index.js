@@ -4,18 +4,16 @@ import clsx from 'clsx';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
-import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Collapse from '@material-ui/core/Collapse';
 import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
+import { Button } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import { red, green } from '@material-ui/core/colors';
-import FavoriteIcon from '@material-ui/icons/Favorite';
 import MailOutlineIcon from '@material-ui/icons/MailOutline';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Checkbox from '@material-ui/core/Checkbox';
 
 const useStyles = makeStyles((theme) => ({
@@ -57,7 +55,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function BrokerCard(props) {
-  const { data, actions, isMobile, selected, setSelected } = props;
+  const { data, selected, setSelected, actions } = props;
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
 
@@ -76,13 +74,11 @@ export default function BrokerCard(props) {
               </Avatar>
             }
             action={
-              <IconButton aria-label="settings">
               <Checkbox
                 checked={selected.includes(data.id)}
                 onClick={(event) => setSelected(event, data.id)}
                 inputProps={{ 'aria-label': 'primary checkbox' }}
               />
-              </IconButton>
             }
             title="Broker"
             subheader={data.name}
@@ -114,9 +110,7 @@ export default function BrokerCard(props) {
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <CardActions disableSpacing className={classes.cardActions}>
-            <IconButton aria-label="details">
-              {data.edit}
-            </IconButton>
+            <Button color="primary" size="small" variant="contained" onClick={() => actions.handleClick(data.id)}>Details</Button>
             <IconButton
               className={clsx(classes.expand, {
                 [classes.expandOpen]: expanded,

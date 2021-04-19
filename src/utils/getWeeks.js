@@ -24,7 +24,7 @@ export const getWeekNumber = (d) => {
     // Return array of year and week number
     return [d.getUTCFullYear(), weekNo];
 }
-const getRunningTotal = (data, row, field) => {
-
-  return parseInt(data[field]) + parseInt(row[field])
-}
+// const getRunningTotal = (data, row, field) => {
+//
+//   return parseInt(data[field]) + parseInt(row[field])
+// }

@@ -14,11 +14,5 @@ export const dispatch = [
     label: 'Phone',
     align: 'center',
     numeric: false
-  },
-  {
-    id: 'edit',
-    label: '',
-    align: 'center',
-    numeric: false
   }
 ]

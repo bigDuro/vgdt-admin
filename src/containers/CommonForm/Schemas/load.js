@@ -99,12 +99,12 @@ export const LoadJSONSchema = {
     "loadedMiles": {
       "title": "Loaded Miles",
       "type": "number",
-      "default": 500
+      "default": 0
     },
     "rate": {
       "title": "Rate",
       "type": "number",
-      "default": 1500
+      "default": 0
     },
     "weight": {
       "title": "Weight",
@@ -119,23 +119,23 @@ export const LoadJSONSchema = {
     "driver": {
       "title": "Driver",
       "type": "string",
-      "enum": [],
-      "enumNames": [],
-      "default": ""
+      "enum": ["none"],
+      "enumNames": ["None"],
+      "default": "none"
     },
     "tractor": {
       "title": "Tractor",
       "type": "string",
-      "enum": [],
-      "enumNames": [],
-      "default": ""
+      "enum": ["none"],
+      "enumNames": ["None"],
+      "default": "none"
     },
     "trailer": {
       "title": "Trailer",
       "type": "string",
-      "enum": [],
-      "enumNames": [],
-      "default": ""
+      "enum": ["none"],
+      "enumNames": ["None"],
+      "default": "none"
     },
     "detentionPay": {
       "title": "Detention hrs",
@@ -143,7 +143,17 @@ export const LoadJSONSchema = {
       "default": 0
     },
     "layoverPay": {
-      "title": "Layover hrs",
+      "title": "Layover days",
+      "type": "number",
+      "default": 0
+    },
+    "breakdownPay": {
+      "title": "Breakdown Days",
+      "type": "number",
+      "default": 0
+    },
+    "additionPay": {
+      "title": "Additional Pay",
       "type": "number",
       "default": 0
     },
@@ -166,20 +176,7 @@ export const LoadJSONSchema = {
       "type": "boolean",
       "title": "TONU",
       "default": "false"
-    },
-    "ratecon": {
-      "type": "string",
-      "title": "Rate Contract",
-      "default": ""
-    },
-    "files": {
-      "type": "array",
-      "title": "Upload Ratecon",
-      "items": {
-        "type": "string",
-        "format": "data-url"
-      }
-    },
+    }
   }
 }
 
@@ -199,14 +196,15 @@ export const LoadFormData = {
   "cargo": "",
   "driver": "1",
   "tractor": "1",
-  "trailer": "2",
+  "trailer": "none",
   "detentionPay": 0,
   "layoverPay": 0,
   "lumper": 0,
   "loadNumber": "",
   "notes": "",
-  "tonu": "false",
-  "ratecon": ""
+  "tonu": "0",
+  "ratecon": "",
+  "additionPay": ""
 };
 
 export const LoadUISchema = {}

@@ -45,20 +45,8 @@ export const loads = [
     numeric: true
   },
   {
-    id: 'editBroker',
-    label: 'Broker',
-    align: 'center',
-    numeric: false
-  },
-  {
     id: 'user',
     label: 'User',
-    align: 'center',
-    numeric: false
-  },
-  {
-    id: 'edit',
-    label: 'View',
     align: 'center',
     numeric: false
   }

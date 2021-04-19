@@ -1,30 +1,41 @@
-export const getCommonActions = (context, table, db, history, filterFields) => {
-  const { deleteRecord, filterRecords, setTableData, getAllRecords } = context;
-  const store = db || table;
-  const refreshData = (store) => {
-    getAllRecords(store).then(data => {
-      setTableData(store, data);
-      return data
-    });
-  }
+export const getCommonActions = (table, history, context) => {
+  const { filterRecords, deleteRecord, getData, getRecord, setRecord, getAssetsFor } = context;
   return {
       handleClick: (id) => {
-        history.push(`${store}/${id}`);
+        getRecord(table, id).then(data => {
+          filterRecords(id)
+          getAssetsFor(table, id)
+          history.push(`${table}/${id}`);
+          return true
+        })
       },
       handleChange: (e) => {
         e.preventDefault();
-        const fields = filterFields;
-        filterRecords(store, fields, e.target.value)
+        filterRecords(e.target.value)
       },
       handleAdd: () => {
-        history.push(`${store}/add`);
+        setRecord(false);
+        getData(table, true).then(response => {
+          history.push(`${table}/add`);
+          return true
+        })
       },
-      handleRefresh: false,
+      handleRefresh: (tbl) => {
+        getData(table, true)
+      },
       handleDelete: (ids) => {
         deleteRecord(table, ids).then(data => {
-          refreshData(store)
+          getData(table, true)
         });
       },
-      handleExport: false
+      handleClear: () => {
+        filterRecords('');
+      },
+      handleUpload: (id) => {
+        getAssetsFor(table, id).then(data => {
+          history.push(`assets/${table}/${id}`);
+        })
+
+      }
     }
 }

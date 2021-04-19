@@ -1,10 +1,10 @@
 import React from 'react';
+import Link from '@material-ui/core/Link';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
-import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Collapse from '@material-ui/core/Collapse';
@@ -12,12 +12,7 @@ import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import { red, green, yellow, grey } from '@material-ui/core/colors';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-import Checkbox from '@material-ui/core/Checkbox';
-import DoneIcon from '@material-ui/icons/Done';
 import WatchLaterIcon from '@material-ui/icons/WatchLater';
 import PlayCircleFilledWhiteIcon from '@material-ui/icons/PlayCircleFilledWhite';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
@@ -25,7 +20,7 @@ import ErrorIcon from '@material-ui/icons/Error';
 import RoomIcon from '@material-ui/icons/Room';
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
 import PauseCircleFilledIcon from '@material-ui/icons/PauseCircleFilled';
-import ContactlessIcon from '@material-ui/icons/Contactless';
+import ControlPanel from './ControlPanel/';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -128,7 +123,7 @@ const icons = (type, classes) => {
 }
 
 export default function LoadCard(props) {
-  const { data, actions, isMobile, selected, setSelected } = props;
+  const { data, actions } = props;
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
 
@@ -137,8 +132,7 @@ export default function LoadCard(props) {
   };
   const totalMiles = parseInt(data.loadedMiles) + parseInt(data.deadHead);
   const ratePerMile = `$${Math.round(parseInt(data.rate)/totalMiles * 100) / 100}`;
-  const isBilled = data.status === "Billed";
-
+  // const isBilled = data.status === "Billed";
   return (
     <Card className={classes.root}>
       <Grid container spacing={0} alignItems="center" justify="space-between">
@@ -187,20 +181,14 @@ export default function LoadCard(props) {
             </Avatar>
           }
           title={`Rate: $${data.rate}.00`}
-          subheader={data.editBroker}
+          subheader={!data.brokerName ? <Link href="#" style={{color:"#ff0303"}} onClick={(e) => actions.handleBrokerClick(e, data.id, data.broker)}>Add Broker!</Link> : <Link href="#" onClick={(e) => actions.handleBrokerClick(e, data.id, data.broker)}>{data.brokerName}</Link>}
         />
         </Grid>
       </Grid>
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <CardActions disableSpacing className={classes.cardActions}>
-            <IconButton aria-label="details">
-              {data.edit}
-            </IconButton>
-            {data.status === 'Completed' && data.broker !== 'addNew' ?
-              <IconButton aria-label="details">
-                {data.genInvoice}
-              </IconButton> : ''}
+            {<ControlPanel row={data} actions={actions}/>}
             <IconButton
               className={clsx(classes.expand, {
                 [classes.expandOpen]: expanded,

@@ -1,7 +1,7 @@
-export const getUserRowData = (rows, actions, editButton) => {
+export const getUserRowData = (rows) => {
   return rows.map(row => {
     const newRow = {...row};
-    newRow.edit = editButton(row.id, actions);
+    // newRow.edit = editButton(row.id, actions);
     return newRow;
   })
 }

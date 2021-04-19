@@ -1,5 +1,5 @@
 export const getBrokerActions = (context, table, history) => {
-  const { saveRecord, getRecord } = context;
+  const { saveRecord, getRecord, getData } = context;
   return {
     handleSave: (record, updateTable, recordIdToUpdate) => {
       return new Promise((resolve, reject) => {
@@ -9,9 +9,13 @@ export const getBrokerActions = (context, table, history) => {
               const updatedLoad = { ...load };
               updatedLoad.broker = data.id;
               saveRecord(updateTable, updatedLoad).then(data => {
-                history.goBack();
-                resolve(data);
+                getData(updateTable, true).then(response => {
+                  history.goBack();
+                  resolve(data);
+                })
               })
+            }).catch(e => {
+              reject(e);
             })
           }else {
             history.goBack();
@@ -20,11 +24,6 @@ export const getBrokerActions = (context, table, history) => {
         })
       })
 
-    },
-    handleChange: (data) => {
-    },
-    handleBack: () => {
-      history.goBack()
     }
   }
 }

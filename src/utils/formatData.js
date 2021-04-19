@@ -1,4 +1,5 @@
 export const formatData = (table, formData) => {
+  // console.log('table, formData:: ', table, formData);
   const formattedFields = {
     brokers: {
       fields_boolean: ['quickPay'],
@@ -6,7 +7,7 @@ export const formatData = (table, formData) => {
     },
     loads: {
       fields_boolean: ['tonu'],
-      fields_int: ['deadHead', 'loadedMiles', 'rate', 'weight', 'detentionPay', 'layoverPay', 'quickPayPercentage', 'lumper']
+      fields_int: ['deadHead', 'loadedMiles', 'rate', 'weight', 'detentionPay', 'layoverPay', 'quickPayPercentage', 'lumper', 'additionPay', 'breakdownPay']
     }
   };
 

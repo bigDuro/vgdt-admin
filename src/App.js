@@ -7,6 +7,7 @@ import Link from '@material-ui/core/Link';
 import RouterComponent from './components/routerComponent';
 import Navigator from './components/Navigator/drawer';
 import NavigatorStatic from './components/Navigator/static';
+import AdminContextProvider from './contexts/AdminContext';
 import Header from './components/Header';
 import history from './utils/history';
 import './App.scss';
@@ -28,33 +29,36 @@ function Copyright() {
 function App(props) {
   const { classes } = props;
   const showNav = useMediaQuery('(min-width:1023px)');
-
   const [state, setState] = React.useState({
     left: false
   });
   const toggleDrawer = (anchor) => {
     setState({ ...state, [anchor]: !state.left });
   };
+  const urlParts = history.location.pathname.split('/');
+  const table = urlParts[urlParts.length-1];
   return (
     <div className="App">
-      <ThemeProvider theme={theme}>
-        <div className={classes.root}>
-          <CssBaseline />
-          <div className={`dc_test ${classes.app}`}>
-            <Header toggleDrawer={toggleDrawer} showToggle={!showNav}/>
-            {showNav ?
-              <NavigatorStatic toggleDrawer={toggleDrawer} anchor="left" open={state["left"]} history={history} className={classes.nav}/> :
-              <Navigator toggleDrawer={toggleDrawer} anchor="left" open={state["left"]} history={history} className={classes.nav}/>
-            }
-            <main className={classes.main}>
-              <RouterComponent history={history}/>
-            </main>
-            <footer className={classes.footer}>
-              <Copyright />
-            </footer>
+      <AdminContextProvider history={history} table={table}>
+        <ThemeProvider theme={theme}>
+          <div className={classes.root}>
+            <CssBaseline />
+            <div className={`dc_test ${classes.app}`}>
+              <Header toggleDrawer={toggleDrawer} showToggle={!showNav}/>
+              {showNav ?
+                <NavigatorStatic toggleDrawer={toggleDrawer} anchor="left" open={state["left"]} history={history} className={classes.nav}/> :
+                <Navigator toggleDrawer={toggleDrawer} anchor="left" open={state["left"]} history={history} className={classes.nav}/>
+              }
+              <main className={classes.main}>
+                <RouterComponent history={history}/>
+              </main>
+              <footer className={classes.footer}>
+                <Copyright />
+              </footer>
+            </div>
           </div>
-        </div>
-      </ThemeProvider>
+        </ThemeProvider>
+      </AdminContextProvider>
     </div>
   );
 }

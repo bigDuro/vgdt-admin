@@ -6,7 +6,7 @@ import ListToolBar from '../ListToolBar';
 const ListView = (props) => {
   return (
     <React.Fragment>
-      <ListToolBar actions={{...props.actions}}/>
+      <ListToolBar {...props}/>
       <ListTable {...props}/>
     </React.Fragment>
   )
