@@ -2,9 +2,9 @@ const path = require('path');
 const zipFolder = require('zip-a-folder');
 const vgdtAPI_zip = 'build/public/api.zip';
 
-const codeigniter4_zip = 'build/non_public/codeigniter4/codeigniter4-alpha.zip';
+const codeigniter4_zip = 'build/non_public/codeigniter4/codeigniter4-beta.zip';
 const publicHtml = 'build/public/vgdt-admin';
-const publicHtml_zip = 'build/public/vgdt-admin-alpha.zip';
+const publicHtml_zip = 'build/public/vgdt-admin-beta.zip';
 const publicAssets = 'src/assets';
 const publicAssets_zip = 'build/public/assets.zip';
 const publicAPI = 'build/public/api';
