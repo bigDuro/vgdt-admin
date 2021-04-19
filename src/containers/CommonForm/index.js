@@ -6,6 +6,8 @@ import Paper from '@material-ui/core/Paper';
 import LockIcon from '@material-ui/icons/Lock';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import FileUploader from '../../components/FileUploader/';
+import FileLoader from '../../components/FileLoader';
 import { AdminContext } from '../../contexts/AdminContext';
 import { paperStyles } from '../../styles/paper';
 import { getSchemaType, getFormData } from  './Schemas/';
@@ -26,7 +28,7 @@ function CommonForm(props) {
   const [disabled, setdisabled] = React.useState(false);
   return (
       <AdminContext.Consumer>{(context) => {
-        const { record, tableData } = context;
+        const { record, tableData, upload, assets } = context;
         const actions = getActions(context, table, history);
         const formData = recordId ? record : formatData(table, data.formData)
         const schema = getSchemaType(table, tableData);
@@ -73,6 +75,13 @@ function CommonForm(props) {
                 </Form> : 'No Form Data'}
               </div>
               </Paper>
+              {
+                recordId ?
+                <React.Fragment>
+                  <FileUploader handleUpload={upload} table={table} id={recordId}/>
+                  <FileLoader assets={assets}/>
+                </React.Fragment> : ''
+              }
             </Grid>
           </Grid>
         )

@@ -52,7 +52,6 @@ export const addItemsToSchema = (schemaPropType, reequiredData, tables) => {
   data.map(item => {
     if(!schemaPropType.enum.includes(item.id)) {
       if((filterBy && dataType === item[filterBy]) || loadAll) {
-        console.log('addItemsToSchema filtered:: ', item);
         schemaPropType.enum.push(item.id);
         schemaPropType.enumNames.push(item[field])
       }

@@ -48,19 +48,19 @@ Vagrantfile
 #-------------------------
 # Temporary Files
 #-------------------------
-writable/cache/*
+codeigniter4/writable/cache/*
 !writable/cache/index.html
 
-writable/logs/*
+codeigniter4/writable/logs/*
 !writable/logs/index.html
 
-writable/session/*
+codeigniter4/writable/session/*
 !writable/session/index.html
 
-writable/uploads/*
+codeigniter4/writable/uploads/*
 !writable/uploads/index.html
 
-writable/debugbar/*
+codeigniter4/writable/debugbar/*
 
 php_errors.log
 
@@ -107,7 +107,7 @@ build/
 # copied build files to match shared hosting file structure
 vgdt-admin/
 vgdt-admin.zip
-
+public/api/assets/
 nbbuild/
 dist/
 nbdist/

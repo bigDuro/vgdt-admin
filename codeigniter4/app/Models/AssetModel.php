@@ -2,42 +2,28 @@
 
 use CodeIgniter\Model;
 
-class LoadModel extends Model
+class AssetModel extends Model
 {
     protected $DBGroup = 'default';
 
-    protected $table      = 'loads';
+    protected $table      = 'assets';
     protected $primaryKey = 'id';
 
     protected $returnType     = 'array';
     // protected $useSoftDeletes = true;
     protected $allowedFields = [
-      'type',
+      'height',
+      'lastModifiedDate',
+      'name',
+      'percent',
+      'previewUrl',
+      'size',
       'status',
-      'pickupDate',
-      'dropoffDate',
-      'pickupLocation',
-      'dropoffLocation',
-      'loadedMiles',
-      'deadHead',
-      'weight',
-      'cargo',
-      'rate',
-      'broker',
-      'detentionPay',
-      'layoverPay',
-      'notes',
-      'user',
-      'driver',
-      'lumper',
-      'tonu',
-      'loadNumber',
-      'tractor',
-      'trailer',
-      'ratecon',
-      'uploads',
-      'additionPay',
-      'breakdownPay'
+      'type',
+      'uploadedDate',
+      'width',
+      'category',
+      'categoryId'
     ];
 
     protected $useTimestamps = false;

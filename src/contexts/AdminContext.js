@@ -1,5 +1,5 @@
 import React, { Component, createContext } from 'react';
-import { get, save, deleteById, exportToCSV, getByID, uploadAssets } from '../services/';
+import { get, save, deleteById, exportToCSV, getByID, uploadAssets, getAssets } from '../services/';
 import { getUpdatedRows } from '../containers/CommonBoard/rows';
 import { formatData } from '../utils/formatData';
 
@@ -29,7 +29,8 @@ class AdminContextProvider extends Component {
       driver: '',
       history: history,
       rows: [],
-      requiredData: [ table, ...getRequiredData(table) ]
+      requiredData: [ table, ...getRequiredData(table) ],
+      assets: []
     }
     this.getData = this.getData.bind(this);
     this.getRecord = this.getRecord.bind(this);
@@ -43,6 +44,7 @@ class AdminContextProvider extends Component {
     this.getDriver = this.getDriver.bind(this);
     this.exportRecordToCSV = this.exportRecordToCSV.bind(this);
     this.upload = this.upload.bind(this);
+    this.getAssetsFor = this.getAssetsFor.bind(this);
   }
 
   // componentDidMount() {
@@ -101,7 +103,6 @@ class AdminContextProvider extends Component {
     const getByIDPromise = new Promise((resolve, reject) => {
       getByID(table, id).then(data => {
         const record = formatData(table, data);
-        console.log('getRecord getRecord:: ', record);
         this.setState({
           record
         })
@@ -179,10 +180,27 @@ class AdminContextProvider extends Component {
     });
   }
 
-  upload(asset) {
-    uploadAssets(asset).then(data => {
+  upload(asset, table, id) {
+    uploadAssets(asset, table, id).then(data => {
       console.log('Upload Done!! ', data);
+      this.setState({
+        assets: [...data]
+      })
     })
+  }
+
+  getAssetsFor(table, id) {
+    const getAssetsForPromise = new Promise((resolve, reject) => {
+      getAssets(table, id).then(data => {
+        this.setState({
+          assets: [...data]
+        })
+        resolve(data)
+      })
+    })
+
+
+    return getAssetsForPromise
   }
 
   render() {
@@ -203,7 +221,8 @@ class AdminContextProvider extends Component {
           getDriver: this.getDriver,
           exportRecordToCSV: this.exportRecordToCSV,
           getData: this.getData,
-          upload: this.upload
+          upload: this.upload,
+          getAssetsFor: this.getAssetsFor
         }
       }>
         {this.props.children}

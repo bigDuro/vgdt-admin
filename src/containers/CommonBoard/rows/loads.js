@@ -9,6 +9,7 @@ export const getLoadRowData = (rows, tables) => {
           newRow.brokerName = broker.name;
           newRow.hasQuickPay = broker.quickPay !== "0" && broker.quickPay > 0;
           newRow.paymentTerms = broker.paymentTerms;
+
         }
         return broker
       })
@@ -19,8 +20,10 @@ export const getLoadRowData = (rows, tables) => {
         if (user.id === row.driver) {
           newRow.driverName = `${user.firstname} ${user.lastname}`
           newRow.driverRate = user.compensation
-          newRow.detentionPay = parseInt(user.detentionRate) * parseInt(row.detentionPay);
-          newRow.layoverPay = parseInt(user.layoverRate) * parseInt(row.layoverPay);
+          newRow.detentionPay = row.detentionPay !== '' ? parseInt(user.detentionRate) * parseFloat(row.detentionPay).toFixed(2) : 0;
+          newRow.breakdownPay = row.breakdownPay !== '' ? parseInt(user.breakdownRate) * parseInt(row.breakdownPay) : 0
+          newRow.layoverPay = row.layoverPay !== '' ? parseInt(user.layoverRate) * parseInt(row.layoverPay) : 0;
+          newRow.additionPay = row.additionPay !== '' ? parseInt(row.additionPay) : 0;
         }
 
         if (user.id === row.user) {

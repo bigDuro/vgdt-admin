@@ -1,7 +1,7 @@
 import { getEnv } from '../config';
 import { INVOICE_DATES } from '../constants/';
 
-const env = getEnv('local'); // local or prod
+export const env = getEnv('local'); // local or prod
 
 export const get = async (type) => {
   const response = await fetch(`${env}/${type}`)
@@ -57,7 +57,6 @@ const formatItems = (items) => {
 export const exportToCSV = async (type, items) => {
   const records = formatItems(items);
   const body = JSON.stringify(records);
-  // console.log('body: ', body);
   const response = await fetch(`${env}/utils/export`, {
     method: 'post',
     body
@@ -69,19 +68,20 @@ export const exportToCSV = async (type, items) => {
   return csv;
 }
 
-export const uploadAssets = async (file) => {
-
-  // const uploadAssetsPromise = new Promise((resolve, reject) => {
+export const uploadAssets = async (file, table, id) => {
   const formData = new FormData();
   formData.append('file', file);
-
-  console.log('uploadAssets:: ', formData);
-
-  const response = await fetch(`${env}/utils/upload/31`, {
+  const response = await fetch(`${env}/assets/upload/${table}/${id}`, {
     method: 'POST',
     body: formData,
   })
 
   const json = await response.json();
   return json;
+}
+
+export const getAssets = async (table, id) => {
+  const response = await fetch(`http://localhost:8888/public/api/assets/upload/${table}/${id}`);
+    const json = await response.json();
+    return json;
 }

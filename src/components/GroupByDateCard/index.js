@@ -38,15 +38,20 @@ export default function GroupByDateCard(props) {
       const weekyDetentionPayToDate = total.detentionPay ? parseInt(record.detentionPay) + parseInt(total.detentionPay) : record.detentionPay;
       const weeklyloadedMiles = total.loadedMiles ? parseInt(record.loadedMiles) + parseInt(total.loadedMiles) : record.loadedMiles;
       const weeklyDeadheadMiles = total.deadHead ? parseInt(record.deadHead) + parseInt(total.deadHead) : record.deadHead;
-      // const weeksAdditionalPayToDate = total.rate ? parseInt(record.rate) + parseInt(total.rate) : parseInt(record.rate);
+      const weekyAdditionPayToDate = parseInt(record.additionPay) + parseInt(total.additionPay) || parseInt(record.additionPay);
+      const weekylayoverPayToDate = parseInt(record.layoverPay) + parseInt(total.layoverPay) ||  parseInt(record.layoverPay);
+      const weekyBreakdownPayToDate = parseInt(record.breakdownPay) + parseInt(total.breakdownPay) || parseInt(record.breakdownPay);
+
       return {
         ...total,
         rate: weeksRateToDate,
-        driverPay: `$${driverWeekPayToDate}`,
+        driverPay: driverWeekPayToDate,
         driverName: record.driverName,
         driverRate: `${record.driverRate * 100}%`,
-        detentionPay: `${weekyDetentionPayToDate}`,
-        layoverPay: record.layoverPay,
+        detentionPay: weekyDetentionPayToDate,
+        additionPay: weekyAdditionPayToDate,
+        layoverPay: weekylayoverPayToDate,
+        breakdownPay: weekyBreakdownPayToDate,
         week: key,
         loadedMiles: weeklyloadedMiles,
         deadHead: weeklyDeadheadMiles

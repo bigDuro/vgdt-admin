@@ -143,7 +143,17 @@ export const LoadJSONSchema = {
       "default": 0
     },
     "layoverPay": {
-      "title": "Layover hrs",
+      "title": "Layover days",
+      "type": "number",
+      "default": 0
+    },
+    "breakdownPay": {
+      "title": "Breakdown Days",
+      "type": "number",
+      "default": 0
+    },
+    "additionPay": {
+      "title": "Additional Pay",
       "type": "number",
       "default": 0
     },
@@ -193,7 +203,8 @@ export const LoadFormData = {
   "loadNumber": "",
   "notes": "",
   "tonu": "0",
-  "ratecon": ""
+  "ratecon": "",
+  "additionPay": ""
 };
 
 export const LoadUISchema = {}

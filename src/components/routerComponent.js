@@ -14,7 +14,7 @@ export default function RouterComponent(props) {
   return (
     <Router history={history}>
         <Switch>
-          <Route exact path="/vgdt-admin/assets" component={AssetManager} />
+          <Route exact path="/vgdt-admin/assets/:table/:id" component={AssetManager} />
           <Route exact path="/vgdt-admin/:table" component={CommonBoard} />
           <Route exact path="/vgdt-admin/:table/add" component={CommonForm} />
           <Route exact path="/vgdt-admin/:table/add/:updateTable/:recordIdToUpdate" component={CommonForm} />
