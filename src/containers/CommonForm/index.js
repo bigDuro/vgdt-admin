@@ -10,8 +10,7 @@ import FileUploader from '../../components/FileUploader/';
 import FileLoader from '../../components/FileLoader';
 import { AdminContext } from '../../contexts/AdminContext';
 import { paperStyles } from '../../styles/paper';
-import { getSchemaType, getFormData } from  './Schemas/';
-import { formatData } from '../../utils/formatData';
+import { getSchemaType } from  './Schemas/';
 import { getActions } from './actions/'
 import './index.scss';
 
@@ -20,17 +19,17 @@ import './index.scss';
 function CommonForm(props) {
   const classes = paperStyles();
   const { history, match } = props;
+  const [ formData, setFormData ] = React.useState([])
   const table = match.params.table;
   const recordId = match.params.id
   const updateTable = match.params.updateTable
   const recordIdToUpdate = match.params.recordIdToUpdate;
-  const data = getFormData(table);
   const [disabled, setdisabled] = React.useState(false);
+
   return (
       <AdminContext.Consumer>{(context) => {
-        const { record, tableData, upload, assets } = context;
+        const { record, tableData, upload, assets} = context;
         const actions = getActions(context, table, history);
-        const formData = recordId ? record : formatData(table, data.formData)
         const schema = getSchemaType(table, tableData);
         const handleLockToggle = (e) => {
           e.preventDefault();
@@ -46,6 +45,10 @@ function CommonForm(props) {
           actions.handleSave(formData, updateTable, recordIdToUpdate);
         }
 
+        if(!record.id){
+          history.goBack();
+        }
+        console.log('record:: ', record);
 
         return (
           <Grid container spacing={3}>
@@ -65,10 +68,10 @@ function CommonForm(props) {
                     <ArrowBackIcon/>
                   </Button>
                 </div>
-                {formData ? <Form
+                {recordId ? <Form
                   schema={schema.JSONSchema}
                   uiSchema={schema.UISchema}
-                  formData={formData}
+                  formData={record}
                   onSubmit={(data) => handleSave(data.formData)}
                   disabled={disabled}
                   onChange={(data) => actions.handleChange(data.formData)}>
@@ -78,8 +81,12 @@ function CommonForm(props) {
               {
                 recordId ?
                 <React.Fragment>
-                  <FileUploader handleUpload={upload} table={table} id={recordId}/>
-                  <FileLoader assets={assets}/>
+                <Grid container spacing={3}>
+                  <Grid item xs={12}>
+                    <FileUploader handleUpload={upload} table={table} id={recordId}/>
+                    <FileLoader assets={assets}/>
+                  </Grid>
+                </Grid>
                 </React.Fragment> : ''
               }
             </Grid>

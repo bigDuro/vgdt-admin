@@ -1,7 +1,6 @@
 import React, { Component, createContext } from 'react';
 import { get, save, deleteById, exportToCSV, getByID, uploadAssets, getAssets } from '../services/';
 import { getUpdatedRows } from '../containers/CommonBoard/rows';
-import { formatData } from '../utils/formatData';
 
 export const AdminContext = createContext();
 
@@ -102,9 +101,8 @@ class AdminContextProvider extends Component {
   getRecord(table, id) {
     const getByIDPromise = new Promise((resolve, reject) => {
       getByID(table, id).then(data => {
-        const record = formatData(table, data);
         this.setState({
-          record
+          record: data
         })
         resolve(data)
       });

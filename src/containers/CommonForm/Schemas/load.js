@@ -192,7 +192,7 @@ export const LoadFormData = {
   "deadHead": 0,
   "loadedMiles": 500,
   "rate": 1500,
-  "weight": "",
+  "weight": 0,
   "cargo": "",
   "driver": "1",
   "tractor": "1",
@@ -202,9 +202,10 @@ export const LoadFormData = {
   "lumper": 0,
   "loadNumber": "",
   "notes": "",
-  "tonu": "0",
-  "ratecon": "",
-  "additionPay": ""
+  "tonu": 0,
+  "ratecon": 0,
+  "additionPay": 0,
+  "breakdownPay": 0
 };
 
 export const LoadUISchema = {}
