@@ -180,10 +180,9 @@ class AdminContextProvider extends Component {
 
   upload(asset, table, id) {
     uploadAssets(asset, table, id).then(data => {
-      console.log('Upload Done!! ', data);
-      this.setState({
-        assets: [...data]
-      })
+      // this.setState({
+      //   assets: [...data]
+      // })
     })
   }
 

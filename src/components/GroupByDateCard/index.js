@@ -33,14 +33,14 @@ export default function GroupByDateCard(props) {
 
   const getWeeklyTotals = (data, key) => {
     const results = data[key].reduce((total, record) => {
-      const weeksRateToDate = total.rate ? parseInt(record.rate) + parseInt(total.rate) : parseInt(record.rate);
+      const weeksRateToDate = total.rate ? parseFloat(record.rate) + parseFloat(total.rate) : parseFloat(record.rate);
       const driverWeekPayToDate = (weeksRateToDate * record.driverRate).toFixed(2);
-      const weekyDetentionPayToDate = total.detentionPay ? parseInt(record.detentionPay) + parseInt(total.detentionPay) : record.detentionPay;
-      const weeklyloadedMiles = total.loadedMiles ? parseInt(record.loadedMiles) + parseInt(total.loadedMiles) : record.loadedMiles;
-      const weeklyDeadheadMiles = total.deadHead ? parseInt(record.deadHead) + parseInt(total.deadHead) : record.deadHead;
-      const weekyAdditionPayToDate = parseInt(record.additionPay) + parseInt(total.additionPay) || parseInt(record.additionPay);
-      const weekylayoverPayToDate = parseInt(record.layoverPay) + parseInt(total.layoverPay) ||  parseInt(record.layoverPay);
-      const weekyBreakdownPayToDate = parseInt(record.breakdownPay) + parseInt(total.breakdownPay) || parseInt(record.breakdownPay);
+      const weekyDetentionPayToDate = total.detentionPay ? parseFloat(record.detentionPay) + parseFloat(total.detentionPay) : parseFloat(record.detentionPay).toFixed(2);
+      const weeklyloadedMiles = total.loadedMiles ? parseFloat(record.loadedMiles) + parseFloat(total.loadedMiles) : parseFloat(record.loadedMiles);
+      const weeklyDeadheadMiles = total.deadHead ? parseFloat(record.deadHead) + parseFloat(total.deadHead) : parseFloat(record.deadHead);
+      const weekyAdditionPayToDate = total.additionPay ? parseFloat(record.additionPay) + parseFloat(total.additionPay) : parseFloat(record.additionPay).toFixed(2);
+      const weekylayoverPayToDate = total.layoverPay ? parseFloat(record.layoverPay) + parseFloat(total.layoverPay) : parseFloat(record.layoverPay).toFixed(2);
+      const weekyBreakdownPayToDate = total.breakdownPay ? parseFloat(record.breakdownPay) + parseFloat(total.breakdownPay) : parseFloat(record.breakdownPay).toFixed(2);
 
       return {
         ...total,
@@ -57,6 +57,7 @@ export default function GroupByDateCard(props) {
         deadHead: weeklyDeadheadMiles
       }
     }, {});
+
     return results;
   }
 

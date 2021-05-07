@@ -12,6 +12,7 @@ import { AdminContext } from '../../contexts/AdminContext';
 import { paperStyles } from '../../styles/paper';
 import { getSchemaType } from  './Schemas/';
 import { getActions } from './actions/'
+import { formatData } from '../../utils/formatData';
 import './index.scss';
 
 
@@ -31,6 +32,7 @@ function CommonForm(props) {
         const { record, tableData, upload, assets} = context;
         const actions = getActions(context, table, history);
         const schema = getSchemaType(table, tableData);
+        const formattedData = formatData(table, record);
         const handleLockToggle = (e) => {
           e.preventDefault();
           setdisabled(!disabled);
@@ -48,7 +50,7 @@ function CommonForm(props) {
         if(!record.id){
           history.goBack();
         }
-        console.log('record:: ', record);
+        console.log('formattedData:: ', formattedData);
 
         return (
           <Grid container spacing={3}>
@@ -68,10 +70,10 @@ function CommonForm(props) {
                     <ArrowBackIcon/>
                   </Button>
                 </div>
-                {recordId ? <Form
+                {formattedData.id ? <Form
                   schema={schema.JSONSchema}
                   uiSchema={schema.UISchema}
-                  formData={record}
+                  formData={formattedData}
                   onSubmit={(data) => handleSave(data.formData)}
                   disabled={disabled}
                   onChange={(data) => actions.handleChange(data.formData)}>
