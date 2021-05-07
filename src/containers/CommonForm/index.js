@@ -50,7 +50,6 @@ function CommonForm(props) {
         if(!record.id){
           history.goBack();
         }
-        console.log('formattedData:: ', formattedData);
 
         return (
           <Grid container spacing={3}>
