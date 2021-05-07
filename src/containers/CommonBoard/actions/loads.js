@@ -1,7 +1,8 @@
 import { generateInvoiceItems } from '../../../utils/generateInvoice'
+import { getFormData } from  '../../CommonForm/Schemas/';
 
 export const getLoadsActions = (table, history, context) => {
-  const { rows, saveRecord, filterRecords, setDriver, getData, driver, tableData, getRecord, setRecord } = context;
+  const { rows, saveRecord, filterRecords, setDriver, getData, driver, tableData, getRecord, setRecord, getAssetsFor } = context;
   const { brokers, equipment } = tableData;
   return {
       handleBrokerClick: (e, loadId, brokerId) => {
@@ -13,8 +14,21 @@ export const getLoadsActions = (table, history, context) => {
           })
 
         }else {
-          setRecord(false);
-          history.push(`brokers/add/${table}/${loadId}`);
+          const data = getFormData('brokers');
+          const record = data.formData;
+          // setRecord(false);
+          saveRecord('brokers', record).then(data => {
+            const id = data.id;
+            // getData(table, true).then(response => {
+              getRecord('brokers', id).then(data => {
+                filterRecords(id)
+                getAssetsFor('brokers', id)
+                  history.push(`brokers/add/${table}/${loadId}`);
+                return true
+              })
+            // })
+          })
+
         }
         filterRecords(loadId)
       },

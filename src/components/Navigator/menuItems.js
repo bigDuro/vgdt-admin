@@ -72,10 +72,10 @@ export const navigation = [
   //   table: 'equipment',
   //   type: 'trailer'
   // },
-  {
-    name: 'Assets',
-    route: 'assets',
-    icon: (<ImageIcon />),
-    table: 'assets'
-  },
+  // {
+  //   name: 'Assets',
+  //   route: 'assets',
+  //   icon: (<ImageIcon />),
+  //   table: 'assets'
+  // },
 ]

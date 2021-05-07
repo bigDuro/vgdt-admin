@@ -7,6 +7,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+import { AdminContext } from '../../contexts/AdminContext';
 import { navigation } from './menuItems';
 import favicon from '../../assets/favicon.png';
 
@@ -55,34 +56,45 @@ const styles = (theme) => ({
 
 function Navigator(props) {
   const { toggleDrawer, anchor, open, history, classes } = props;
-  const navigate = (location) => {
-    history.push(`/vgdt-admin/${location}`);
-  }
 
   return (
-    <Drawer anchor={anchor} open={open} onClose={() => toggleDrawer(anchor)}>
-      <div
-        role="presentation"
-        onClick={() => toggleDrawer(anchor)}
-        onKeyDown={() => toggleDrawer(anchor)}
-      >
-        <img
-          src={favicon}
-          width={100}
-          style={{"margin":"10px 50px"}}
-          spacing={1}
-          alt="Vanguard Trucking llc icon"
-        />
-        <List>
-          {navigation.map((item, index) => (
-            <ListItem onClick={() => navigate(item.route)} button key={index} className={clsx(classes.firebase, classes.item, classes.itemCategory)}>
-              <ListItemIcon>{item.icon}</ListItemIcon>
-              <ListItemText primary={item.name} />
-            </ListItem>
-          ))}
-        </List>
-      </div>
-    </Drawer>
+    <AdminContext.Consumer>{(context) => {
+      const { getData } = context;
+      const navigate = (location) => {
+        console.log('location:: ', location);
+        getData(location, true).then(response => {
+          history.push(`/vgdt-admin/${location}`);
+          return response;
+        })
+      }
+
+      return (
+        <Drawer anchor={anchor} open={open} onClose={() => toggleDrawer(anchor)}>
+          <div
+            role="presentation"
+            onClick={() => toggleDrawer(anchor)}
+            onKeyDown={() => toggleDrawer(anchor)}
+          >
+            <img
+              src={favicon}
+              width={100}
+              style={{"margin":"10px 50px"}}
+              spacing={1}
+              alt="Vanguard Trucking llc icon"
+            />
+            <List>
+              {navigation.map((item, index) => (
+                <ListItem onClick={() => navigate(item.route)} button key={index} className={clsx(classes.firebase, classes.item, classes.itemCategory)}>
+                  <ListItemIcon>{item.icon}</ListItemIcon>
+                  <ListItemText primary={item.name} />
+                </ListItem>
+              ))}
+            </List>
+          </div>
+        </Drawer>
+      );
+    }}
+  </AdminContext.Consumer>
   );
 }
 

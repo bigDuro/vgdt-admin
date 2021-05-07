@@ -6,7 +6,7 @@ export const getCommonActions = (context, table, history) => {
         saveRecord(table, record).then(data => {
           getData(table, true).then(response => {
             history.goBack();
-            setRecord(false);
+            setRecord(data);
             resolve(data);
           })
         })
@@ -14,6 +14,7 @@ export const getCommonActions = (context, table, history) => {
     },
     handleChange: (data) => {
       // console.log(data);
+      // setRecord(data);
     },
     handleBack: () => {
       history.goBack();

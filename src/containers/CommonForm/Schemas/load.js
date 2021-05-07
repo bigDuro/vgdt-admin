@@ -190,21 +190,22 @@ export const LoadFormData = {
   "dropoffLocation": "",
   "dropoffDate": tomorrow,
   "deadHead": 0,
-  "loadedMiles": 500,
-  "rate": 1500,
-  "weight": "",
+  "loadedMiles": 0,
+  "rate": 0,
+  "weight": 0,
   "cargo": "",
-  "driver": "1",
-  "tractor": "1",
+  "driver": "none",
+  "tractor": "none",
   "trailer": "none",
   "detentionPay": 0,
   "layoverPay": 0,
   "lumper": 0,
   "loadNumber": "",
   "notes": "",
-  "tonu": "0",
-  "ratecon": "",
-  "additionPay": ""
+  "tonu": 0,
+  "ratecon": 0,
+  "additionPay": 0,
+  "breakdownPay": 0
 };
 
 export const LoadUISchema = {}

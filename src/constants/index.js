@@ -41,17 +41,17 @@ export const LOAD_STATUS = [
   {
     type: 'scheduled',
     label: 'Scheduled',
-    description: 'Ready for pick up.'
+    description: 'Ready!'
   },
   {
     type: 'live',
     label: 'Live',
-    description: 'At the Reciever'
+    description: 'Loaded'
   },
   {
     type: 'completed',
     label: 'Completed',
-    description: 'Completed Delivery'
+    description: 'Unloaded'
   }
 ];
 

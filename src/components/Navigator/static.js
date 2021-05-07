@@ -58,6 +58,7 @@ function Navigator(props) {
     <AdminContext.Consumer>{(context) => {
       const { getData } = context;
       const navigate = (location) => {
+        console.log('location:: ', location);
         getData(location, true).then(response => {
           history.push(`/vgdt-admin/${location}`);
           return response;

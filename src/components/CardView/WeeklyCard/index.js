@@ -16,7 +16,7 @@ import WatchLaterIcon from '@material-ui/icons/WatchLater';
 import LocalShippingIcon from '@material-ui/icons/LocalShipping';
 import LoadCard from '../LoadCard';
 import DriverWeek from './DriverWeek';
-import { getMomentWeek } from '../../../utils/dates';
+import { getMomentWeek, getDateRangeOfWeek } from '../../../utils/dates';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -81,6 +81,7 @@ export default function WeeklyCard(props) {
   };
 
   const partsOfWeek = week.split('-')
+  const theDateRange = getDateRangeOfWeek(partsOfWeek[1], partsOfWeek[0])
 
   return (
     <Card className={classes.root}>
@@ -96,7 +97,7 @@ export default function WeeklyCard(props) {
               <IconButton aria-label="settings">
               </IconButton>
             }
-            title={`${week === currentWeek ? 'Current Week: ' + partsOfWeek[1] + ' | Year: ' + partsOfWeek[0]: week < currentWeek ? 'Week: ' + partsOfWeek[1] + ' | Year: ' + partsOfWeek[0]  :  'Upcoming Week: ' + partsOfWeek[1] + ' | Year: ' + partsOfWeek[0]}`}
+            title={`${week === currentWeek ? 'Current Week: ' + theDateRange : week < currentWeek ? 'Week: ' + theDateRange  :  'Upcoming Week: ' + theDateRange}`}
           />
           <CardContent>
            <Typography variant="body2" color="textSecondary" component="p">

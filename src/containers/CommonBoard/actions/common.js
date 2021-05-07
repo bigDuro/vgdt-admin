@@ -1,5 +1,10 @@
+import { getSchemaType, getFormData } from  '../../CommonForm/Schemas/';
+
 export const getCommonActions = (table, history, context) => {
-  const { filterRecords, deleteRecord, getData, getRecord, setRecord, getAssetsFor } = context;
+  const { filterRecords, deleteRecord, getData, getRecord, setRecord, getAssetsFor, saveRecord } = context;
+  const data = getFormData(table);
+  const record = data.formData;
+
   return {
       handleClick: (id) => {
         getRecord(table, id).then(data => {
@@ -14,10 +19,16 @@ export const getCommonActions = (table, history, context) => {
         filterRecords(e.target.value)
       },
       handleAdd: () => {
-        setRecord(false);
-        getData(table, true).then(response => {
-          history.push(`${table}/add`);
-          return true
+        saveRecord(table, record).then(data => {
+          const id = data.id;
+          // getData(table, true).then(response => {
+            getRecord(table, id).then(data => {
+              filterRecords(id)
+              getAssetsFor(table, id)
+              history.push(`${table}/${id}`);
+              return true
+            })
+          // })
         })
       },
       handleRefresh: (tbl) => {
