@@ -54,6 +54,15 @@ class AssetService {
      ->findAll();
      return $records;
    }
+
+   public function deleteRecordById($record_id)
+   {
+     $model = new AssetModel();
+     $record = $model->find($record_id);
+     $model->delete([$record_id]);
+
+     return $record;
+   }
 }
 
 // 'height',

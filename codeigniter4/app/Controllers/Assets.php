@@ -42,4 +42,21 @@ class Assets extends BaseController
 		        echo "nothing here!";
 		}
 	}
+
+	public function delete($id)
+	{
+		$Service = new AssetService();
+		$request = $this->request;
+		$response = $this->response;
+		$method = $request->getMethod();
+
+		switch ($method) {
+				case 'post':
+						$record = $Service->deleteRecordById($id);
+						return $response->setJSON($record);
+						break;
+				default:
+						echo "nothing here!";
+		}
+	}
 }

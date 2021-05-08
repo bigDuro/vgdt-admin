@@ -15,14 +15,14 @@ function AssetManager(props) {
   }
   return (
       <AdminContext.Consumer>{(context) => {
-        const { upload, assets } = context;
+        const { upload, assets, deleteRecord } = context;
         return (
           <div className="AssetManager">
             <div className="AssetManager_Back" onClick={handleBackClick}>
               <ArrowBackIcon/>
             </div>
-            <FileUploader handleUpload={upload} table={table} id={id}/>
-            <FileLoader assets={assets}/>
+            <FileUploader handleUpload={upload} table={table} id={id} handleDelete={deleteRecord}/>
+            <FileLoader assets={assets} handleDelete={deleteRecord}/>
           </div>
         )
       }}
