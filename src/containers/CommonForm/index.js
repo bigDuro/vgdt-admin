@@ -6,8 +6,7 @@ import Paper from '@material-ui/core/Paper';
 import LockIcon from '@material-ui/icons/Lock';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import FileUploader from '../../components/FileUploader/';
-import FileLoader from '../../components/FileLoader';
+import AssetManager from '../../containers/AssetManager/';
 import { AdminContext } from '../../contexts/AdminContext';
 import { paperStyles } from '../../styles/paper';
 import { getSchemaType } from  './Schemas/';
@@ -84,8 +83,7 @@ function CommonForm(props) {
                 <React.Fragment>
                 <Grid container spacing={3}>
                   <Grid item xs={12}>
-                    <FileUploader handleUpload={upload} table={table} id={recordId}/>
-                    <FileLoader assets={assets}/>
+                    <AssetManager {...props}/>
                   </Grid>
                 </Grid>
                 </React.Fragment> : ''

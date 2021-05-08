@@ -21,6 +21,24 @@ class Assets extends BaseController
 		}
   }
 
+	public function get($table, $id)
+  {
+		$Service = new AssetService();
+		$request = $this->request;
+		$response = $this->response;
+		$method = $request->getMethod();
+		$json = $request->getJSON();
+
+		switch ($method) {
+				case 'get':
+						$records = $Service->getRecordsByFolder($table, $id);
+						return $response->setJSON($records);
+						break;
+				default:
+						echo "nothing here!";
+		}
+  }
+
 	public function upload($table, $id)
 	{
 		$Service = new AssetService();
@@ -43,7 +61,7 @@ class Assets extends BaseController
 		}
 	}
 
-	public function delete($id)
+	public function delete($table, $recordId, $file)
 	{
 		$Service = new AssetService();
 		$request = $this->request;
@@ -52,7 +70,7 @@ class Assets extends BaseController
 
 		switch ($method) {
 				case 'post':
-						$record = $Service->deleteRecordById($id);
+						$record = $Service->deleteFile($table, $recordId, $file);
 						return $response->setJSON($record);
 						break;
 				default:

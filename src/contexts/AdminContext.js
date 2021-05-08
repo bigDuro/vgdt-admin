@@ -43,6 +43,7 @@ class AdminContextProvider extends Component {
     this.getDriver = this.getDriver.bind(this);
     this.exportRecordToCSV = this.exportRecordToCSV.bind(this);
     this.upload = this.upload.bind(this);
+    this.deleteAsset = this.deleteAsset.bind(this);
     this.getAssetsFor = this.getAssetsFor.bind(this);
   }
 
@@ -136,6 +137,8 @@ class AdminContextProvider extends Component {
       const response = deleteById(table, id);
       this.setState({
         deleteRecord: {...response}
+      }, () => {
+        this.getAllRecords(table)
       });
       return response;
     })
@@ -180,10 +183,20 @@ class AdminContextProvider extends Component {
 
   upload(asset, table, id) {
     uploadAssets(asset, table, id).then(data => {
-      // this.setState({
-      //   assets: [...data]
-      // })
+      this.setState({
+        assets: [...data]
+      })
     })
+  }
+
+  async deleteAsset(table, id, recordId) {
+    const response = await deleteById('assets', id);
+    this.setState({
+      deleteRecord: {...response}
+    }, () => {
+      this.getAssetsFor(table, recordId)
+    });
+    return response;
   }
 
   getAssetsFor(table, id) {
@@ -191,6 +204,8 @@ class AdminContextProvider extends Component {
       getAssets(table, id).then(data => {
         this.setState({
           assets: [...data]
+        }, () => {
+          console.log('updated assets!!');
         })
         resolve(data)
       })
@@ -219,6 +234,7 @@ class AdminContextProvider extends Component {
           exportRecordToCSV: this.exportRecordToCSV,
           getData: this.getData,
           upload: this.upload,
+          deleteAsset: this.deleteAsset,
           getAssetsFor: this.getAssetsFor
         }
       }>

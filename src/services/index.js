@@ -1,7 +1,7 @@
 import { getEnv } from '../config';
 import { INVOICE_DATES } from '../constants/';
 
-export const env = getEnv('local'); // local or prod
+export const env = getEnv('prod'); // local or prod
 
 export const get = async (type) => {
   const response = await fetch(`${env}/${type}`)
@@ -82,6 +82,15 @@ export const uploadAssets = async (file, table, id) => {
 
 export const getAssets = async (table, id) => {
   const response = await fetch(`${env}/assets/upload/${table}/${id}`);
+    const json = await response.json();
+    return json;
+}
+
+export const deleteAssets = async (table, recordId, file) => {
+  const response = await fetch(`${env}/assets/delete/${table}/${recordId}/${file}`, {
+    method: 'POST',
+    body: file,
+  })
     const json = await response.json();
     return json;
 }

@@ -15,6 +15,7 @@ import { env } from '../../services';
 import { paperStyles } from '../../styles/paper';
 import './index.scss';
 
+
 const onError = (e) => {
   console.log(e, 'error in file-viewer');
 }
@@ -25,7 +26,7 @@ function CustomErrorComponent(props) {
   )
 }
 function FileLoader(props) {
-  const { assets, handleDelete } = props;
+  const { assets, id, table, deleteFile } = props;
   const classes = paperStyles();
 
   return (
@@ -33,25 +34,28 @@ function FileLoader(props) {
       <Grid container spacing={1}>
         {assets.map((file, indx) => {
           return (
-            <Grid item xs={3}>
+            <Grid item xs={12} sm={6} md={4} lg={3}>
               <Card className={classes.root}>
                 <CardActionArea>
+                  {file.includes('pdf') ?
                   <FileViewer
-                    fileType={file.type.split('/')[1]}
-                    filePath={`${env}/${file.previewUrl}`}
+                    fileType={file.split('.')[1]}
+                    filePath={`${env}/assets/${table}/${id}/${file}`}
                     errorComponent={CustomErrorComponent}
-                    onError={onError}/>
+                    onError={onError}/> :
+                    <img src={`${env}/assets/${table}/${id}/${file}`} width="100%"/>
+                  }
                   <CardContent>
                     <Typography gutterBottom variant="subtitle2" component="p">
-                      {file.name}
+                      {file}
                     </Typography>
                   </CardContent>
                 </CardActionArea>
                 <CardActions>
-                  <Button size="small" color="primary" onClick={()=> window.open(`${env}/${file.previewUrl}`, "_blank")}>
+                  <Button size="small" color="primary" onClick={()=> window.open(`${env}/assets/${table}/${id}/${file}`, "_blank")}>
                     Download
                   </Button>
-                  <Button size="small" color="primary" onClick={() => handleDelete('assets', [file.id])}>
+                  <Button size="small" color="primary" onClick={() => deleteFile(table, id, file)}>
                     Delete
                   </Button>
                 </CardActions>

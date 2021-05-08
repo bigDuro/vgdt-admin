@@ -4,6 +4,7 @@ import FileUploader from '../../components/FileUploader/';
 import FileLoader from '../../components/FileLoader'
 import AdminContextProvider from '../../contexts/AdminContext';
 import { AdminContext } from '../../contexts/AdminContext';
+import { env, getAssets, uploadAssets, deleteAssets } from '../../services';
 // import './index.scss';
 
 function AssetManager(props) {
@@ -13,16 +14,35 @@ function AssetManager(props) {
   const handleBackClick = () => {
     history.goBack();
   }
+  const [ assets, setAssets ] = React.useState([])
+  const deleteFile = (table, id, file) => {
+    deleteAssets(table, id, file).then(data => {
+      setAssets(data);
+    })
+  }
+  const uploadFile = (file, table, id) => {
+    uploadAssets(file, table, id).then(data => {
+      setAssets(data);
+    })
+  }
+
+  React.useEffect(() => {
+    const makeRequest = async () => {
+      const response = await getAssets(table, id);
+      setAssets(response)
+    }
+    makeRequest();
+  }, assets);
+
   return (
       <AdminContext.Consumer>{(context) => {
-        const { upload, assets, deleteRecord } = context;
         return (
           <div className="AssetManager">
             <div className="AssetManager_Back" onClick={handleBackClick}>
               <ArrowBackIcon/>
             </div>
-            <FileUploader handleUpload={upload} table={table} id={id} handleDelete={deleteRecord}/>
-            <FileLoader assets={assets} handleDelete={deleteRecord}/>
+            <FileUploader handleUpload={uploadFile} table={table} id={id} handleDelete={deleteFile}/>
+            <FileLoader assets={assets} deleteFile={deleteFile} id={id} table={table}/>
           </div>
         )
       }}
