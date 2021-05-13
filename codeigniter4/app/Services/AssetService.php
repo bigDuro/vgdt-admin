@@ -33,14 +33,15 @@ class AssetService {
      if ($file->isValid() && ! $file->hasMoved())
      {
        $name = $file->getName();
-       $data->name = $name;
+       $assetName = str_replace(' ', '_', $name);
+       $data->name = $assetName;
        $data->category = $table;
        $data->categoryId = $id;
-       $data->previewUrl = 'assets/' . $table . '/' . $id . '/' . $name;
+       $data->previewUrl = 'assets/' . $table . '/' . $id . '/' . $assetName;
        $data->type = $file->getMimeType();
        $data->size = $file->getSize();
        $data->lastModifiedDate = $file->getMTime();
-       $filename = $path . '/' . $name;
+       $filename = $path . '/' . $assetName;
 
        // if (file_exists($filename)) {
        //   $records = $model->where('category', $table)
@@ -49,7 +50,7 @@ class AssetService {
        // }else {
 
 
-         $response = $file->move($path);
+         $response = $file->move($path, $assetName);
 
          // if($response) {
          //   // echo "fileUpload:: " . $response;
