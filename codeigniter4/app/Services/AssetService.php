@@ -33,7 +33,7 @@ class AssetService {
      if ($file->isValid() && ! $file->hasMoved())
      {
        $name = $file->getName();
-       $assetName = str_replace(' ', '_', $name);
+       $assetName = preg_replace('/[^A-Za-z0-9.]/', '_', $name);
        $data->name = $assetName;
        $data->category = $table;
        $data->categoryId = $id;
