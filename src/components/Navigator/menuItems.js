@@ -18,25 +18,29 @@ export const navigation = [
     name: 'LoadBoard',
     route: 'loads',
     icon: (<PostAddIcon />),
-    table: 'loads'
+    table: 'loads',
+    admin: true
   },
   {
     name: 'Brokers',
     route: 'brokers',
     icon: (<BusinessIcon />),
-    table: 'brokers'
+    table: 'brokers',
+    admin: true
   },
   {
     name: 'Invoices',
     route: 'invoices',
     icon: (<MonetizationOnIcon />),
-    table: 'invoices'
+    table: 'invoices',
+    admin: true
   },
   {
     name: 'Employees',
     route: 'employees',
     icon: (<PeopleIcon />),
-    table: 'employees'
+    table: 'employees',
+    admin: true
   },
   // {
   //   name: 'Drivers',
@@ -56,7 +60,8 @@ export const navigation = [
     name: 'Equipment',
     route: 'equipment',
     icon: (<LocalShippingIcon />),
-    table: 'equipment'
+    table: 'equipment',
+    admin: true
   },
   // {
   //   name: 'Tractors',

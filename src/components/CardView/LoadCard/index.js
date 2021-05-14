@@ -181,7 +181,7 @@ export default function LoadCard(props) {
             </Avatar>
           }
           title={`Rate: $${data.rate}.00`}
-          subheader={!data.brokerName ? <Link href="#" style={{color:"#ff0303"}} onClick={(e) => actions.handleBrokerClick(e, data.id, data.broker)}>Add Broker!</Link> : <Link href="#" onClick={(e) => actions.handleBrokerClick(e, data.id, data.broker)}>{data.brokerName}</Link>}
+          subheader={!actions.handleBrokerClick ? <Typography variant="body2" color="textSecondary" component="p">{data.brokerName}</Typography> : !data.brokerName ? <Link href="#" style={{color:"#ff0303"}} onClick={(e) => actions.handleBrokerClick(e, data.id, data.broker)}>Add Broker!</Link> : <Link href="#" onClick={(e) => actions.handleBrokerClick(e, data.id, data.broker)}>{data.brokerName}</Link>}
         />
         </Grid>
       </Grid>

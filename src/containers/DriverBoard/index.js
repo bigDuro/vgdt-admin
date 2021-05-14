@@ -1,76 +1,84 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import ViewModuleIcon from '@material-ui/icons/ViewModule';
-import IconButton from '@material-ui/core/IconButton';
-import AppsIcon from '@material-ui/icons/Apps';
-import TocIcon from '@material-ui/icons/Toc';
-import ListView from '../../components/ListView';
-import CardView from '../../components/CardView';
 import GroupByDateCard from '../../components/GroupByDateCard';
-import AdminContextProvider from '../../contexts/AdminContext';
-import { AdminContext } from '../../contexts/AdminContext';
-import { getColumnType } from './columns';
-import { paperStylesTable } from '../../styles/paper';
 import { getActions } from './actions';
 import { getUpdatedRows } from './rows';
+import { paperStylesTable } from '../../styles/paper';
+import { get, getLoadsByKeyValue, getByID, getRecordsByIds, save, getAssets } from '../../services';
 import './index.scss';
 
 
-function CommonBoard(props) {
+
+
+function DriverBoard(props) {
   const classes = paperStylesTable();
   const { history, match } = props;
-  const [showGrid, setShowGrid] = React.useState(true);
-  const position = match.params.position || false;
-  const table = match.params.table;
-  const tableType = position || table;
-  const columnData = getColumnType(tableType);
-  const showCard = useMediaQuery('(max-width:1023px)');
-
-  const getListView = (rows, actions) => {
-    return (
-      <Paper className={classes.paper}>
-        <ListView history={history} actions={actions} rows={rows} columns={columnData} order_by="name"/>
-      </Paper>
-    )
+  const [tables, setTables] = useState({});
+  const [rows, setRows] = useState([]);
+  const [driverId, setDriverId] = useState('');
+  const driver = match.params.driver;
+  const actions = getActions(history, driver);
+  const getData = (id, employees) => {
+    const loadsResponse = getLoadsByKeyValue('driver', id).then(loads => {
+      const brokerIds = loads.reverse().map(load => {
+        return load.broker
+      })
+      const brokerResponse = getRecordsByIds('brokers', brokerIds).then(brokers => {
+        const tempData = {
+          'employees': employees,
+          'brokers': brokers,
+          'loads': loads
+        }
+        setTables(tempData);
+        setRows(getUpdatedRows('loads', tempData));
+      });
+    })
   }
 
-  const getCardView = (rows, actions, table) => {
-    return (
-      table === 'loads' ? <GroupByDateCard history={history} actions={actions} rows={rows} columns={columnData} table={table}/> :
-      <CardView history={history} actions={actions} rows={rows} columns={columnData} table={table}/>
-    )
-  }
+  React.useEffect(() => {
+    const makeRequest = async () => {
+      const employeeResponse = get('employees').then(employees => {
+        // setTables({
+        //   ...tables,
+        //   'employees': employees
+        // });
+        const theDriver = employees.filter(data => {
+          return `${data.firstname} ${data.lastname}` === driver
+        })
+        if(theDriver && theDriver.length){
+          setDriverId(theDriver[0].id);
+          getData(theDriver[0].id, employees)
+        }
+      });
 
-  const handleLayout = () => {
-    setShowGrid(!showGrid)
+
+    }
+    makeRequest();
+  }, []);
+
+
+  actions.handleStatus = (id, status) => {
+    return new Promise((resolve, reject) => {
+      const record = {
+        id, status
+      }
+      save('loads', record).then(data => {
+        getData(driverId, tables.employees)
+      })
+    })
   }
 
 
   return (
-    <AdminContextProvider>
-      <AdminContext.Consumer>{(context) => {
-        const actions = getActions(context, table, position, history);
-        const rows = getUpdatedRows(context, tableType, actions);
-        return (
-          <Grid container spacing={3}>
-            <div className="viewOptions">
-                <IconButton onClick={handleLayout}>
-                  {!showCard ? !showGrid ? <AppsIcon/> : <TocIcon/> : ''}
-                </IconButton>
-            </div>
-            <Grid item xs={12}>
-                {showCard || !showCard && showGrid ? getCardView(rows, actions, table) : getListView(rows, actions)}
-            </Grid>
-          </Grid>
-
-        )
-      }}
-      </AdminContext.Consumer>
-    </AdminContextProvider>
+    <Grid container spacing={3}>
+      <Grid item xs={12}>
+        {rows && rows.length ? <GroupByDateCard driverSelect={false} history={history} actions={actions} rows={rows} tables={tables} searchTerm={''}/> : ''}
+      </Grid>
+    </Grid>
   )
 }
 
 
-export default CommonBoard;
+export default DriverBoard;

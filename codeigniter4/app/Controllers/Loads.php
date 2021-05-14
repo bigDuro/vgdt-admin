@@ -77,4 +77,21 @@ class Loads extends BaseController
 		}
 	}
 
+	public function getLoadsByKeyValue($type, $id)
+	{
+		$Service = new LoadService();
+		$request = $this->request;
+		$response = $this->response;
+		$method = $request->getMethod();
+
+		switch ($method) {
+				case 'get':
+						$record = $Service->getRecordByKeyValue($type, $id);
+						return $response->setJSON($record);
+						break;
+				default:
+						echo "nothing here!";
+		}
+	}
+
 }

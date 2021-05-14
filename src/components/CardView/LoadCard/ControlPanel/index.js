@@ -15,13 +15,13 @@ function ControlPanel(props) {
     <React.Fragment>
     <Grid container spacing={1}>
       <Grid item>
-        <Button color="primary" size="small" variant="contained" onClick={() => handleClick(id)}>Details</Button>
+        {handleClick ? <Button color="primary" size="small" variant="contained" onClick={() => handleClick(id)}>Details</Button> : ''}
       </Grid>
       <Grid item>
         <Button color="primary" size="small" variant="contained" onClick={() => handleUpload(id)}>Docs</Button>
       </Grid>
       <Grid item>
-        {status === 'Completed' && broker !== 'addNew' ?
+        {status === 'Completed' && broker !== 'addNew' && handleCreateInvoice ?
           <Button color="primary" size="small" variant="outlined" onClick={() => handleCreateInvoice([id], true)}>Invoice</Button> :
             updatedLabel && status !== 'Billed' ?
           <Button color="primary" size="small" variant="outlined" onClick={() => handleStatus(id, updatedLabel)}>{statusMessage}</Button> :

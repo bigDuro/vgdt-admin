@@ -51,4 +51,14 @@ class LoadService {
      // echo "string";
      return $date;
    }
+
+   public function getRecordByKeyValue($type, $id)
+   {
+     $model = new LoadModel();
+     $record = $model->where($type, $id)
+                   ->findAll();;
+     return $record;
+
+     return $record;
+   }
 }
