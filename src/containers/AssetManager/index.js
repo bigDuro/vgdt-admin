@@ -38,9 +38,6 @@ function AssetManager(props) {
       <AdminContext.Consumer>{(context) => {
         return (
           <div className="AssetManager">
-            <div className="AssetManager_Back" onClick={handleBackClick}>
-              <ArrowBackIcon/>
-            </div>
             <FileUploader handleUpload={uploadFile} table={table} id={id} handleDelete={deleteFile}/>
             <FileLoader assets={assets} deleteFile={deleteFile} id={id} table={table}/>
           </div>
