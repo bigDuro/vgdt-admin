@@ -83,6 +83,7 @@ export const getLoadsActions = (table, history, context) => {
         })
       },
       filterByDriver: (driver) => {
+        console.log(driver);
         setDriver(driver);
         filterRecords(driver)
       },

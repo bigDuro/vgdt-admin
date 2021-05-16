@@ -16,6 +16,7 @@ import WatchLaterIcon from '@material-ui/icons/WatchLater';
 import LocalShippingIcon from '@material-ui/icons/LocalShipping';
 import LoadCard from '../LoadCard';
 import DriverWeek from './DriverWeek';
+import ProfitDonut from './ProfitDonut';
 import { getMomentWeek, getDateRangeOfWeek } from '../../../utils/dates';
 
 const useStyles = makeStyles((theme) => ({
@@ -57,6 +58,10 @@ const useStyles = makeStyles((theme) => ({
   },
   cardActions: {
     backgroundColor: '#fff'
+  },
+  profitDonut: {
+    padding: 20,
+    textAligh: 'center'
   }
 }));
 
@@ -85,8 +90,8 @@ export default function WeeklyCard(props) {
 
   return (
     <Card className={classes.root}>
-      <Grid container spacing={0} alignItems="center" justify="space-between">
-        <Grid item  xs={12} sm={12} md={6} className={""}>
+      <Grid container spacing={0} justify="space-between">
+        <Grid item  xs={12} sm={12} md={4} className={""}>
             <CardHeader
             avatar={
               <Avatar aria-label="status" className={""}>
@@ -101,21 +106,30 @@ export default function WeeklyCard(props) {
           />
           <CardContent>
            <Typography variant="body2" color="textSecondary" component="p">
-             Total: ${totals.rate}.00
+             <b> Total:</b>  ${totals.rate}.00
            </Typography>
            <Typography variant="body2" color="textSecondary" component="p">
-             Total Miles: {parseInt(totals.loadedMiles) + parseInt(totals.deadHead)}
+             <b> Loaded Miles:</b>  {parseInt(totals.loadedMiles)}
            </Typography>
            <Typography variant="body2" color="textSecondary" component="p">
-             Total Rate Per Mile: ${(parseInt(totals.rate) / (parseInt(totals.loadedMiles) + parseInt(totals.deadHead))).toFixed(2)}
+             <b> Deadhead Miles:</b>  {parseInt(totals.deadHead)}
+           </Typography>
+           <Typography variant="body2" color="textSecondary" component="p">
+             <b> Total Rate Per Mile:</b>  ${(parseInt(totals.rate) / (parseInt(totals.loadedMiles) + parseInt(totals.deadHead))).toFixed(2)}
            </Typography>
           </CardContent>
         </Grid>
-        <Grid item  xs={12} sm={12} md={6}>
+        <Grid item  xs={12} sm={12} md={4}>
         {driver !== '' ?
           <DriverWeek driver={driver} totals={totals} icons={icons}/> : '' }
 
         </Grid>
+        <Grid item  xs={12} sm={12} md={4} align="center">
+          <div className={classes.profitDonut}>
+            <ProfitDonut totals={totals}/>
+          </div>
+        </Grid>
+
       </Grid>
       <Grid container spacing={3}>
         <Grid item xs={12}>

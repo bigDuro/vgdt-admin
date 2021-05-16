@@ -26,25 +26,25 @@ export default function DriverWeek(props) {
       />
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
-          Rate: {totals.driverRate}
+          <b> Rate:</b>  {totals.driverRate}
         </Typography>
         <Typography variant="body2" color="textSecondary" component="p">
-          Standard Pay: ${totals.driverPay}
+          <b> Standard Pay:</b>  ${totals.driverPay}
         </Typography>
         <Typography variant="body2" color="textSecondary" component="p">
-          Detention Pay: ${totals.detentionPay}
+          <b> Detention Pay:</b>  ${totals.detentionPay}
         </Typography>
         <Typography variant="body2" color="textSecondary" component="p">
-          Layover Pay: ${totals.layoverPay}
+          <b> Layover Pay:</b>  ${totals.layoverPay}
         </Typography>
         <Typography variant="body2" color="textSecondary" component="p">
-          Breakdown Pay: ${totals.breakdownPay}
+          <b> Breakdown Pay:</b>  ${totals.breakdownPay}
         </Typography>
         <Typography variant="body2" color="textSecondary" component="p">
-          Addtional Pay: ${totals.additionPay}
+          <b> Addtional Pay:</b>  ${totals.additionPay}
         </Typography>
         <Typography variant="body2" color="textSecondary" component="p">
-          Total Pay: ${totalPay}
+          <b> Total Pay:</b>  ${totalPay}
         </Typography>
       </CardContent>
     </React.Fragment>

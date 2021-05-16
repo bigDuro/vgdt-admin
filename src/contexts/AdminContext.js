@@ -67,6 +67,7 @@ class AdminContextProvider extends Component {
           }
           return model
         }, {})
+
         const rows = setRows ? getUpdatedRows(table, data) : this.state.rows;
         this.setState({
           tableData: {...this.state.tableData, ...data},
@@ -146,7 +147,7 @@ class AdminContextProvider extends Component {
 
 
   filterRecords(searchTerm) {
-    const fields = Object.keys(this.state.rows[0]);
+    const fields = Object.keys(this.state.rows[19]);
     const filteredRecords = [];
     const cacheIDs = [];
     if(fields.length) {
@@ -165,6 +166,7 @@ class AdminContextProvider extends Component {
       })
     }
   }
+
   setDriver(driver) {
     this.setState({
       driver
