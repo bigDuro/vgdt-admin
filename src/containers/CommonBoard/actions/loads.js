@@ -3,7 +3,7 @@ import { getFormData } from  '../../CommonForm/Schemas/';
 
 export const getLoadsActions = (table, history, context) => {
   const { rows, saveRecord, filterRecords, setDriver, getData, driver, tableData, getRecord, setRecord, getAssetsFor } = context;
-  const { brokers, equipment } = tableData;
+  const { brokers, equipment, loads } = tableData;
   return {
       handleBrokerClick: (e, loadId, brokerId) => {
         e.preventDefault();
@@ -40,7 +40,7 @@ export const getLoadsActions = (table, history, context) => {
       handleExport: false,
       handleCreateInvoice: (selected, isClicked) => {
         const billed = selected.map(id => {
-          const load = rows.filter(l => l.id === id)[0];
+          const load = loads.filter(l => l.id === id)[0];
           const broker = brokers.filter(b => b.id === load.broker)[0];
           if(load && load.status === 'Completed' && load.broker !== 'addNew') {
             if(isClicked) {

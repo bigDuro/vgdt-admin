@@ -147,7 +147,7 @@ class AdminContextProvider extends Component {
 
 
   filterRecords(searchTerm) {
-    const fields = Object.keys(this.state.rows[19]);
+    const fields = Object.keys(this.state.rows[0]);
     const filteredRecords = [];
     const cacheIDs = [];
     if(fields.length) {
