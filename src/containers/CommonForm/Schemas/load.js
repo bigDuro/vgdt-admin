@@ -1,5 +1,19 @@
 import { getTodayAndTommorrowDates } from '../../../utils/adjustDates';
+import { LOAD_STATUS } from '../../../constants/';
 const { today, tomorrow } = getTodayAndTommorrowDates();
+
+// const
+
+const statusOptions = LOAD_STATUS.reduce((opt, item) => {
+  opt.enum.push(item.type)
+  opt.enumNames.push(item.label)
+  return opt;
+}, {
+  enum: [],
+  enumNames: []
+})
+
+
 
 export const LoadJSONSchema = {
   "title": "Load Details",
@@ -30,20 +44,8 @@ export const LoadJSONSchema = {
     "status": {
       "title": "Status",
       "type": "string",
-      "enum": [
-        "Planning",
-        "Scheduled",
-        "Live",
-        "Completed",
-        "Billed"
-      ],
-      "enumNames": [
-        "Planning",
-        "Scheduled",
-        "Live",
-        "Completed",
-        "Billed"
-      ],
+      "enum": [...statusOptions.enum],
+      "enumNames": [...statusOptions.enumNames],
       "default": "Planning"
     },
     "type": {

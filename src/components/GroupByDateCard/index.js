@@ -32,7 +32,11 @@ export default function GroupByDateCard(props) {
 
 
   const getWeeklyTotals = (data, key) => {
+
     const results = data[key].reduce((total, record) => {
+      if (!record.rate) {
+        console.log('record: ', record);
+      }
       const weeksRateToDate = total.rate ? parseFloat(record.rate) + parseFloat(total.rate) : parseFloat(record.rate);
       const driverWeekPayToDate = (weeksRateToDate * record.driverRate).toFixed(2);
       const weekyDetentionPayToDate = total.detentionPay ? parseFloat(record.detentionPay) + parseFloat(total.detentionPay) : parseFloat(record.detentionPay).toFixed(2);
