@@ -85,7 +85,7 @@ export default function EmployeeCard(props) {
                 inputProps={{ 'aria-label': 'primary checkbox' }}
               />
             }
-            title={<Link color="primary" href={`/vgdt-${data.position}/name/${data.firstname} ${data.lastname}`}>{data.firstname} {data.lastname}</Link>}
+            title={<Link color="primary" target="_blank" href={`/vgdt-${data.position}/name/${data.firstname} ${data.lastname}`}>{data.firstname} {data.lastname}</Link>}
             subheader={`Position: ${data.position}`}
           />
         </Grid>
