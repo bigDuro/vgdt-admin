@@ -12,7 +12,7 @@ class LoadService {
    public function getRecords()
    {
      $model = new LoadModel();
-     $records = $model->orderBy('id', 'DESC')->findAll();
+     $records = $model->orderBy('dropoffDate', 'DESC')->findAll();
      return $records;
    }
 
@@ -55,10 +55,8 @@ class LoadService {
    public function getRecordByKeyValue($type, $id)
    {
      $model = new LoadModel();
-     $record = $model->where($type, $id)
+     $record = $model->where($type, $id)->orderBy('dropoffDate', 'DESC')
                    ->findAll();;
-     return $record;
-
      return $record;
    }
 }

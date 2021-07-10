@@ -11,7 +11,7 @@ class BrokerService {
    public function getRecords()
    {
      $model = new BrokerModel();
-     $records = $model->findAll();
+     $records = $model->orderBy('name', 'ASC')->findAll();
      return $records;
    }
 
