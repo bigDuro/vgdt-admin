@@ -23,7 +23,7 @@ function ControlPanel(props) {
       <Grid item>
         {status === 'Completed' && broker !== 'addNew' && handleCreateInvoice ?
           <Button color="primary" size="small" variant="outlined" onClick={() => handleCreateInvoice([id], true)}>Invoice</Button> :
-            updatedLabel && status !== 'Billed' ?
+            updatedLabel && status !== 'Completed' ?
           <Button color="primary" size="small" variant="outlined" onClick={() => handleStatus(id, updatedLabel)}>{statusMessage}</Button> :
           ''
         }
