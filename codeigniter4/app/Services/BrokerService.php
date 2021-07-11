@@ -2,10 +2,11 @@
 use App\Models\BrokerModel;
 
 // Get Broker info takes connection and sql query
-class BrokerService {
+class BrokerService extends BaseService {
   function __construct()
    {
-
+     $model = new BrokerModel();
+     parent::__construct($model);
    }
 
    public function getRecords()
@@ -15,27 +16,4 @@ class BrokerService {
      return $records;
    }
 
-   public function saveRecord($data)
-   {
-     $model = new BrokerModel();
-     $model->save($data);
-     $record = $model->find($data);
-     return $record;
-   }
-
-   public function getRecord($record_id)
-   {
-     $model = new BrokerModel();
-     $record = $model->find($record_id);
-     return $record;
-   }
-
-   public function deleteRecordById($record_id)
-   {
-     $model = new BrokerModel();
-     $record = $model->find($record_id);
-     $model->delete([$record_id]);
-
-     return $record;
-   }
 }

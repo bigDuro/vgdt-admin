@@ -31,7 +31,9 @@ export const LoadJSONSchema = {
     "rate",
     "user",
     "driver",
-    "broker"
+    "broker",
+    "tractor",
+    "trailer"
   ],
   "properties": {
     "user": {
@@ -121,23 +123,23 @@ export const LoadJSONSchema = {
     "driver": {
       "title": "Driver",
       "type": "string",
-      "enum": ["none"],
-      "enumNames": ["None"],
-      "default": "none"
+      "enum": [""],
+      "enumNames": [""],
+      "default": ""
     },
     "tractor": {
       "title": "Tractor",
       "type": "string",
-      "enum": ["none"],
-      "enumNames": ["None"],
-      "default": "none"
+      "enum": [""],
+      "enumNames": [""],
+      "default": ""
     },
     "trailer": {
       "title": "Trailer",
       "type": "string",
-      "enum": ["none"],
-      "enumNames": ["None"],
-      "default": "none"
+      "enum": [""],
+      "enumNames": [""],
+      "default": ""
     },
     "detentionPay": {
       "title": "Detention hrs",
@@ -196,9 +198,9 @@ export const LoadFormData = {
   "rate": 0,
   "weight": 0,
   "cargo": "",
-  "driver": "none",
-  "tractor": "none",
-  "trailer": "none",
+  "driver": "",
+  "tractor": "",
+  "trailer": "",
   "detentionPay": 0,
   "layoverPay": 0,
   "lumper": 0,

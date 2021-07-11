@@ -2,17 +2,11 @@
 use App\Models\AssetModel;
 helper('filesystem');
 // Get Asset info takes connection and sql query
-class AssetService {
+class AssetService extends BaseService {
   function __construct()
    {
-
-   }
-
-   public function getRecords()
-   {
      $model = new AssetModel();
-     $records = $model->findAll();
-     return $records;
+     parent::__construct($model);
    }
 
    public function getRecordsByFolder($table, $id)
@@ -21,7 +15,6 @@ class AssetService {
      $map = directory_map($path);
      return $map;
    }
-
 
    public function fileUpload($file, $table, $id)
    {
@@ -42,26 +35,7 @@ class AssetService {
        $data->size = $file->getSize();
        $data->lastModifiedDate = $file->getMTime();
        $filename = $path . '/' . $assetName;
-
-       // if (file_exists($filename)) {
-       //   $records = $model->where('category', $table)
-       //   ->where('categoryId', $id)
-       //   ->findAll();
-       // }else {
-
-
-         $response = $file->move($path, $assetName);
-
-         // if($response) {
-         //   // echo "fileUpload:: " . $response;
-         //   // $map = directory_map('./mydirectory/');
-         //   $model->save($data);
-         //   $records = $model->where('category', $table)
-         //   ->where('categoryId', $id)
-         //   ->findAll();
-         //   // return $response;
-         // }
-       // }
+       $response = $file->move($path, $assetName);
      }
      $map = directory_map($path);
      return $map;
@@ -69,11 +43,6 @@ class AssetService {
 
    public function getRecordsByTable($table, $id)
    {
-     // $model = new AssetModel();
-     // $records = $model->where('category', $table)
-     // ->where('categoryId', $id)
-     // ->findAll();
-     // return $records;
      $path = 'assets/' . $table . '/' . $id;
      $map = directory_map($path);
      return $map;
@@ -88,16 +57,3 @@ class AssetService {
      return $map;
    }
 }
-
-// 'height',
-// 'lastModifiedDate',
-// 'name',
-// 'percent',
-// 'previewUrl',
-// 'size',
-// 'status',
-// 'type',
-// 'uploadedDate',
-// 'width',
-// 'category',
-// 'categoryId'

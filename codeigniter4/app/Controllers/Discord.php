@@ -1,9 +1,6 @@
 <?php namespace App\Controllers;
 use App\Services\DiscordService;
 
-
-
-
 class Discord extends BaseController
 {
 	public function index()

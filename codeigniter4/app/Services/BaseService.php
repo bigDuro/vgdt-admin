@@ -1,41 +1,47 @@
 <?php namespace App\Services;
-use App\Models\BaseModel;
 
 // Get Base info takes connection and sql query
 class BaseService {
-  function __construct()
+  function __construct($model)
    {
-
+     $this->model = $model;
    }
 
    public function getRecords()
    {
-     $model = new BaseModel();
-     $records = $model->findAll();
+     // $model = new BaseModel();
+     $records = $this->model->findAll();
      return $records;
    }
 
    public function saveRecord($data)
    {
-     $model = new BaseModel();
-     $model->save($data);
-     $record = $model->find($data);
+     // $model = new BaseModel();
+     $this->model->save($data);
+     $record = $this->model->find($data);
      return $record;
    }
 
    public function getRecord($record_id)
    {
-     $model = new BaseModel();
-     $record = $model->find($record_id);
+     // $model = new BaseModel();
+     $record = $this->model->find($record_id);
      return $record;
    }
 
    public function deleteRecordById($record_id)
    {
-     $model = new BaseModel();
-     $record = $model->find($record_id);
-     $model->delete([$record_id]);
+     // $model = new BaseModel();
+     $record = $this->model->find($record_id);
+     $this->model->delete([$record_id]);
 
      return $record;
+   }
+
+   public function getRecordWithAttrs($attr)
+   {
+     // $model = new EmployeeModel();
+     $records = $this->model->where('position', $attr)->findAll();
+     return $records;
    }
 }

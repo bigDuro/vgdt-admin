@@ -3,10 +3,11 @@ use App\Models\LoadModel;
 use CodeIgniter\I18n\Time;
 
 // Get Load info takes connection and sql query
-class LoadService {
+class LoadService extends BaseService {
   function __construct()
    {
-
+     $model = new LoadModel();
+     parent::__construct($model);
    }
 
    public function getRecords()
@@ -16,29 +17,6 @@ class LoadService {
      return $records;
    }
 
-   public function saveRecord($data)
-   {
-     $model = new LoadModel();
-     $model->save($data);
-     $record = $model->find($data);
-     return $record;
-   }
-
-   public function getRecord($record_id)
-   {
-     $model = new LoadModel();
-     $record = $model->find($record_id);
-     return $record;
-   }
-
-   public function deleteRecordById($record_id)
-   {
-     $model = new LoadModel();
-     $record = $model->find($record_id);
-     $model->delete([$record_id]);
-
-     return $record;
-   }
 
    public function getRecordByDate()
    {
