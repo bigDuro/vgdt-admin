@@ -55,8 +55,8 @@ class LoadService {
    public function getRecordByKeyValue($type, $id)
    {
      $model = new LoadModel();
-     $record = $model->where($type, $id)->orderBy('dropoffDate', 'DESC')
-                   ->findAll();;
+     $record = $model->where($type, $id)->orderBy('dropoffDate', 'asc')
+                   ->findAll();
      return $record;
    }
 }
